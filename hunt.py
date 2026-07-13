@@ -78,6 +78,23 @@ def criteria(notice: str) -> dict:
     return out
 
 
+def deadline_from_notice(notice: str) -> str:
+    """SH 목록에는 접수기간이 없다. 게시일만 준다. 공고문 일정표에서 마감일을 읽는다.
+
+    공고문 표기: 신청접수(온라인)'26. 7. 13.(월)10:00 ~'26. 7. 15.(수)17:00
+    이걸 못 읽으면 마감 경고가 안 뜨고, 마감을 놓친다.
+    """
+    flat = " ".join(notice.split())
+    m = re.search(
+        r"신청접수.{0,20}?['‘’](\d{2})\.\s*(\d{1,2})\.\s*(\d{1,2})\..{0,12}?"
+        r"~\s*['‘’]?(\d{2})\.\s*(\d{1,2})\.\s*(\d{1,2})\.",
+        flat)
+    if not m:
+        return ""
+    yy, mm, dd = m.group(4), m.group(5), m.group(6)
+    return f"20{yy}.{int(mm):02d}.{int(dd):02d}"
+
+
 def judge(crit: dict) -> list[str]:
     """순위별로 갈라서 판정한다. 2순위는 부모 자산까지 합산되므로 유불리가 뒤집힌다."""
     lines = []
@@ -134,12 +151,16 @@ def collect(commute: Commute) -> list[dict]:
                         if g["commute"]["total_min"] <= PROFILE["max_commute"]]
                 if not near:
                     continue
+                notice = source.notice_text(ann)
+                if not ann.get("deadline"):
+                    ann["deadline"] = deadline_from_notice(notice)
                 briefs.append({
                     "agency": name,
                     "ann": ann,
                     "groups": near[:5],
                     "total_groups": len(groups),
-                    "criteria": criteria(source.notice_text(ann)),
+                    "dropped": len(source.groups(us)) - len(groups),
+                    "criteria": criteria(notice),
                 })
             except Exception as e:
                 traceback.print_exc(file=sys.stderr)
@@ -185,7 +206,7 @@ def render(briefs: list[dict]) -> str:
     if not real:
         lines.append("오늘은 신청 가능한 공고 없음")
     for b in real:
-        ann, c = b["ann"], b["commute"] if "commute" in b else None
+        ann = b["ann"]
         new = "🆕 " if ann.get("posted", "") >= yesterday else ""
         lines.append(f"📌 {new}[{b['agency']}] {ann['title'][:60]}")
         if ann.get("deadline"):
@@ -194,16 +215,16 @@ def render(briefs: list[dict]) -> str:
             lines.append(f"・ 마감: {ann['deadline']}"
                          + (f" (D-{left}){urgent}" if left is not None else ""))
         lines += judge(b["criteria"])
+        drop = f", 좌표 못 찾아 제외 {b['dropped']}개" if b.get("dropped") else ""
         lines.append(f"・ 출퇴근권 신청단위 {len(b['groups'])}개 "
-                     f"(전체 {b['total_groups']}개)")
+                     f"(전체 {b['total_groups']}개{drop})")
         for g in b["groups"]:
             cm = g["commute"]
-            rent = (f"{g['rent_min']:,}~{g['rent_max']:,}"
-                    if g.get("rent_min") != g.get("rent_max")
-                    else f"{g.get('rent_min') or 0:,}")
-            head = (f"   ▸ {g['unit']} · {g['count']}호 · "
-                    f"약 {cm['total_min']}분 · 월 {rent}원")
+            rent = _range(g.get("rent_min"), g.get("rent_max"))
+            dep = f"{g['deposit']:,}" if g.get("deposit") else "?"
+            head = (f"   ▸ {g['unit']} · {g['count']}호 · 약 {cm['total_min']}분")
             lines.append(head)
+            lines.append(f"      보증금 {dep}원 / 월 {rent}원")
             if not cm["certain"]:
                 # LH: 어느 건물에 걸릴지 모른다
                 b_, w_ = cm["best"], cm["worst"]
@@ -221,6 +242,15 @@ def render(briefs: list[dict]) -> str:
         for e in errors:
             lines.append(f"・ {e['error'][:90]}")
     return "\n".join(lines)
+
+
+def _range(lo, hi) -> str:
+    """월세가 없으면 0원을 찍지 않는다. 0원은 명백히 틀린 출력이다."""
+    if lo is None and hi is None:
+        return "확인 필요"
+    if lo is None or hi is None:
+        return f"{(lo or hi):,}"
+    return f"{lo:,}" if lo == hi else f"{lo:,}~{hi:,}"
 
 
 def _days_left(deadline: str) -> int | None:
