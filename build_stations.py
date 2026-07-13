@@ -1,53 +1,48 @@
 #!/usr/bin/env python3
-"""4호선 역 좌표를 한 번 받아 stations.json 으로 굳힌다.
+"""수도권 전철 노선 그래프를 만들어 stations.json 으로 굳힌다.
 
-매일 Overpass 를 때릴 이유가 없다. 역은 안 움직인다.
-노선이 연장되거나 역이 추가되면 다시 돌리면 된다.
+역 좌표만 모아두고 "가장 가까운 4호선 역까지 직선거리로 간다"고 근사했더니
+존재하지 않는 환승을 지어냈다. 오리역(수인분당선)에서 인덕원(4호선)까지
+13.5km를 직선으로 "탄다"고 계산해서 용인수지를 52분으로 매겼다. 실제로는
+그 두 역을 잇는 노선이 없고 65~70분이 걸린다. 버스터미널 노드에 스냅되는
+경우까지 있었다.
+
+그래서 OSM 노선 관계(route relation)에서 역의 순서를 읽어 실제 인접 그래프를
+만든다. 환승은 같은 이름의 역끼리 이어주고, 노선을 갈아탈 때만 비용을 물린다.
+
+역은 안 움직인다. 한 번 만들어두고 노선이 연장될 때만 다시 돌린다.
 """
 import json
 import pathlib
 import subprocess
 import time
-import urllib.parse
 
-# 당고개 -> 오이도. 순서가 곧 정거장 수 계산의 기준이다.
-LINE4 = [
-    "당고개", "상계", "노원", "창동", "쌍문", "수유", "미아", "미아사거리", "길음",
-    "성신여대입구", "한성대입구", "혜화", "동대문", "동대문역사문화공원", "충무로",
-    "명동", "회현", "서울역", "숙대입구", "삼각지", "신용산", "이촌", "동작",
-    "총신대입구", "사당", "남태령", "선바위", "경마공원", "대공원", "과천",
-    "정부과천청사", "인덕원", "평촌", "범계", "금정", "산본", "수리산", "대야미",
-    "반월", "상록수", "한대앞", "중앙", "고잔", "초지", "안산", "신길온천",
-    "정왕", "오이도",
-]
+CACHE = pathlib.Path("_subway.json")
 
-# OSM 표기가 다른 역들
-ALIAS = {
-    "총신대입구": ["총신대입구(이수)", "이수"],
-    "서울역": ["서울"],
-    "당고개": ["불암산"],
-    "동대문역사문화공원": ["동대문역사문화공원(DDP)"],
-}
-
-QUERY = """[out:json][timeout:60];
+# 수도권 전철 전체.
+# subway 만 받으면 수인·분당선과 경의·중앙선이 빠진다. 둘은 route=train 인데
+# 이름이 '수인·분당선: 고색 → 왕십리' 처럼 '수도권'으로 시작하지도 않는다.
+# 이게 빠지면 수원·용인 매물의 경로가 통째로 틀린다.
+QUERY = """[out:json][timeout:240];
 (
-  node["railway"="station"](37.20,126.70,37.72,127.20);
-  node["public_transport"="station"](37.20,126.70,37.72,127.20);
+  rel["route"="subway"](37.10,126.55,37.80,127.35);
+  rel["route"="light_rail"](37.10,126.55,37.80,127.35);
+  rel["route"="train"]["name"~"수인|분당|경의|중앙|경춘|경강|서해|공항|수도권"](37.10,126.55,37.80,127.35);
 );
+out body;
+node(r);
 out body;"""
 
-
-CACHE = pathlib.Path("_overpass.json")
+WORKPLACE = "정부과천청사"
 
 
 def fetch() -> list[dict]:
-    """Overpass 는 연속 요청에 rate limit 을 걸고 빈 응답을 준다. 캐시를 먼저 본다."""
     if CACHE.exists():
         print(f"  캐시 사용: {CACHE}")
         return json.loads(CACHE.read_text())["elements"]
     for attempt in range(4):
         raw = subprocess.run(
-            ["curl", "-sS", "--max-time", "150", "-X", "POST",
+            ["curl", "-sS", "--max-time", "300", "-X", "POST",
              "https://overpass-api.de/api/interpreter",
              "--data-urlencode", "data=" + QUERY],
             capture_output=True).stdout
@@ -55,48 +50,68 @@ def fetch() -> list[dict]:
             CACHE.write_bytes(raw)
             return json.loads(raw)["elements"]
         print(f"  Overpass 빈 응답 (재시도 {attempt + 1}/4)")
-        time.sleep(15)
+        time.sleep(20)
     raise RuntimeError("Overpass 응답 실패")
+
+
+def line_name(tags: dict) -> str:
+    """'수도권 전철 4호선: 불암산 → 오이도' -> '수도권 전철 4호선' (방향별 중복 제거)"""
+    name = tags.get("name", "")
+    return name.split(":")[0].strip() or tags.get("ref", "?")
 
 
 def main():
     elements = fetch()
+    nodes = {e["id"]: e for e in elements if e["type"] == "node"}
+    rels = [e for e in elements if e["type"] == "relation"]
 
-    coords = {}
-    for e in elements:
-        name = e.get("tags", {}).get("name", "").replace("역", "")
-        if name and name not in coords:
-            coords[name] = (round(e["lat"], 6), round(e["lon"], 6))
+    stations: dict[str, dict] = {}   # 역이름 -> {lat, lon, lines}
+    edges: set[tuple] = set()        # (역A, 역B, 노선)
 
-    # 4호선은 정거장 순서까지 안다 (직통이면 정거장 수로 시간을 낸다).
-    stations, missing = [], []
-    for i, name in enumerate(LINE4):
-        hit = next((coords[a] for a in [name] + ALIAS.get(name, []) if a in coords), None)
-        if hit:
-            stations.append({"name": name, "idx": i, "lat": hit[0], "lon": hit[1],
-                             "line4": True})
-        else:
-            missing.append(name)
+    for rel in rels:
+        line = line_name(rel.get("tags", {}))
+        seq = []
+        for m in rel.get("members", []):
+            if m["type"] != "node" or m.get("role") not in ("stop", "stop_exit_only",
+                                                            "stop_entry_only", ""):
+                continue
+            n = nodes.get(m["ref"])
+            if not n:
+                continue
+            name = n.get("tags", {}).get("name", "").strip()
+            if not name:
+                continue
+            name = name.replace("역", "") if name.endswith("역") else name
+            if seq and seq[-1][0] == name:
+                continue
+            seq.append((name, n["lat"], n["lon"]))
 
-    # 나머지 노선의 역도 넣는다. 4호선 역까지 걸어간다고 가정하면 서초·동작처럼
-    # 2·3호선 타고 사당에서 갈아타는 동네가 부당하게 밀려난다.
-    on4 = {s["name"] for s in stations}
-    others = 0
-    for name, (lat, lon) in coords.items():
-        if name in on4:
-            continue
-        stations.append({"name": name, "idx": None, "lat": lat, "lon": lon,
-                         "line4": False})
-        others += 1
+        for name, lat, lon in seq:
+            s = stations.setdefault(name, {"lat": lat, "lon": lon, "lines": []})
+            if line not in s["lines"]:
+                s["lines"].append(line)
+        for (a, *_), (b, *_) in zip(seq, seq[1:]):
+            if a != b:
+                edges.add((a, b, line))
+                edges.add((b, a, line))
 
-    out = {"workplace_station": "정부과천청사", "stations": stations}
-    with open("stations.json", "w") as f:
-        json.dump(out, f, ensure_ascii=False, indent=1)
+    if WORKPLACE not in stations:
+        raise RuntimeError(f"직장역 '{WORKPLACE}' 을 못 찾았다")
 
-    print(f"저장: 4호선 {len(LINE4) - len(missing)}/{len(LINE4)}개 + 기타 {others}개 "
-          f"= {len(stations)}개 역")
-    if missing:
-        print("못 찾은 4호선 역:", ", ".join(missing))
+    out = {
+        "workplace": WORKPLACE,
+        "stations": [{"name": k, **v} for k, v in sorted(stations.items())],
+        "edges": sorted(edges),
+    }
+    pathlib.Path("stations.json").write_text(
+        json.dumps(out, ensure_ascii=False, indent=1))
+
+    lines = {ln for s in stations.values() for ln in s["lines"]}
+    print(f"저장: 역 {len(stations)}개, 구간 {len(edges) // 2}개, 노선 {len(lines)}개")
+    print(f"직장역: {WORKPLACE} — 노선 {stations[WORKPLACE]['lines']}")
+    for probe in ("사당", "오리", "한대앞", "상록수", "수원"):
+        if probe in stations:
+            print(f"  {probe}: {stations[probe]['lines']}")
 
 
 if __name__ == "__main__":

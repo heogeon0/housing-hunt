@@ -66,9 +66,12 @@ def read_xlsx(blob: bytes) -> list[list[str]]:
     rows = []
     for row in re.findall(r"<row[^>]*>(.*?)</row>", sheet, re.S):
         cells: dict[str, str] = {}
-        for attrs, inner, empty_attrs in re.findall(
-                r"<c\b([^>]*)>(.*?)</c>|<c\b([^>]*)/>", row, re.S):
-            attrs = attrs or empty_attrs
+        # self-closing 셀(<c r="J13"/>)과 일반 셀을 한 패턴으로 가른다.
+        # 예전 패턴은 [^>]* 가 self-closing 의 '/' 까지 먹어서, 빈 셀이 다음 셀의
+        # 값을 빨아들이고 컬럼이 한 칸씩 밀렸다. 값이 조용히 틀리는 버그였다.
+        for attrs, inner in re.findall(
+                r"<c\b([^>]*?)(?:/>|>(.*?)</c>)", row, re.S):
+            inner = inner or ""
             ref = re.search(r'r="([A-Z]+)\d+"', attrs)
             typ = re.search(r't="(\w+)"', attrs)
             inline = re.search(r"<is>.*?<t[^>]*>(.*?)</t>.*?</is>", inner, re.S)

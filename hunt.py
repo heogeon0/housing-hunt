@@ -138,9 +138,19 @@ def collect(commute: Commute) -> list[dict]:
             continue
 
         for ann in anns:
+            left = _days_left(ann.get("deadline", ""))
+            if left is not None and left < 0:
+                continue        # 이미 마감됐다
             try:
                 us = source.units(ann)
                 if not us:
+                    # 매물 목록 첨부가 없는 공고가 많다. SH 특화형 매입임대(서초·강동·
+                    # 금천)가 여기 걸린다. 조용히 버리면 사용자는 그런 공고가 있었다는
+                    # 사실 자체를 모른다. 목록에는 띄우고 원문을 보게 한다.
+                    briefs.append({"agency": name, "ann": ann, "groups": [],
+                                   "total_groups": 0, "dropped": 0,
+                                   "no_units": True,
+                                   "criteria": criteria(source.notice_text(ann))})
                     continue
                 groups = source.groups(us)
                 for g in groups:
@@ -198,16 +208,19 @@ def _commute_of(group: dict, commute: Commute) -> dict | None:
 
 def render(briefs: list[dict]) -> str:
     lines = [f"🏠 청약·임대 공고 브리핑 ({TODAY})", ""]
-    yesterday = (TODAY - timedelta(days=1)).strftime("%Y.%m.%d")
+    # 날짜 표기가 기관마다 다르다. LH 는 '2026.07.13', SH 는 '2026-07-13'.
+    # 문자열로 비교하면 '-' < '.' 라 SH 에는 🆕 가 절대 안 붙는다.
+    yesterday = _norm(str(TODAY - timedelta(days=1)))
 
-    real = [b for b in briefs if "ann" in b]
+    real = [b for b in briefs if "ann" in b and not b.get("no_units")]
+    unlisted = [b for b in briefs if b.get("no_units")]
     errors = [b for b in briefs if "error" in b]
 
     if not real:
-        lines.append("오늘은 신청 가능한 공고 없음")
+        lines.append("오늘은 매물까지 확인된 공고 없음")
     for b in real:
         ann = b["ann"]
-        new = "🆕 " if ann.get("posted", "") >= yesterday else ""
+        new = "🆕 " if _norm(ann.get("posted", "")) >= yesterday else ""
         lines.append(f"📌 {new}[{b['agency']}] {ann['title'][:60]}")
         if ann.get("deadline"):
             left = _days_left(ann["deadline"])
@@ -237,11 +250,26 @@ def render(briefs: list[dict]) -> str:
                              + (" · 버스 필요" if e["needs_bus"] else ""))
         lines.append("")
 
+    if unlisted:
+        # 매물 목록 첨부가 없는 공고. 조용히 버리면 이런 게 있었다는 것조차 모른다.
+        lines.append("📎 매물 목록이 없어 직접 확인해야 하는 공고")
+        for b in unlisted:
+            ann = b["ann"]
+            left = _days_left(ann.get("deadline", ""))
+            d = f" (D-{left})" if left is not None else ""
+            lines.append(f"・ [{b['agency']}] {ann['title'][:52]}{d}")
+        lines.append("")
+
     if errors:
         lines.append("⚠️ 수집 실패")
         for e in errors:
             lines.append(f"・ {e['error'][:90]}")
     return "\n".join(lines)
+
+
+def _norm(d: str) -> str:
+    """날짜 표기 통일. LH '2026.07.13' / SH '2026-07-13' 를 같이 비교하려면 필요하다."""
+    return d.replace("-", ".").strip()
 
 
 def _range(lo, hi) -> str:

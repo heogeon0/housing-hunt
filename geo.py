@@ -1,13 +1,20 @@
-"""주소 -> 좌표 -> 4호선 기준 출퇴근 시간 추정.
+"""주소 -> 좌표 -> 직장까지의 출퇴근 시간.
 
-정확한 대중교통 경로 탐색은 하지 않는다. 우리가 필요한 건 순위를 매기는 것이지
-분 단위 정답이 아니다. 그래서 '가장 가까운 4호선 역까지 걷는 시간 + 정거장 수'
-로 근사한다. 4호선 축이 아닌 곳은 환승 페널티를 얹는다.
+전에는 "가장 가까운 4호선 역까지 직선거리로 간다"고 근사했다. 그랬더니 선로가
+없는 구간을 지어냈다. 오리역(수인분당선)에서 인덕원(4호선)까지 13.5km를 직선으로
+"타고" 용인수지를 52분으로 매겼는데, 두 역을 잇는 노선은 존재하지 않고 실제로는
+65~70분이 걸린다. 버스터미널 노드에 스냅되는 경우까지 있었다.
+
+지금은 실제 노선 그래프에서 최단경로를 찾는다. 환승은 노선이 바뀔 때만 비용을
+문다. 정확한 시각표 기반 경로탐색은 아니지만, 없는 노선을 지어내지는 않는다.
+필요한 건 순위지 분 단위 정답이 아니다.
 """
 from __future__ import annotations
 
+import heapq
 import json
 import pathlib
+import re
 import subprocess
 import time
 import urllib.parse
@@ -17,24 +24,19 @@ HERE = pathlib.Path(__file__).parent
 CACHE = HERE / ".geocache.json"
 NOMINATIM = "https://nominatim.openstreetmap.org/search"
 
-WALK_M_PER_MIN = 75          # 직선거리 기준. 실제 도보는 굽어지므로 아래에서 1.25배 보정
+WALK_M_PER_MIN = 75      # 직선거리 기준. 실제 도보는 굽어지므로 DETOUR 로 보정
 DETOUR = 1.25
-MIN_PER_STOP = 2.2           # 4호선 표정속도
-RAIL_M_PER_MIN = 530         # 환승 노선 구간의 실효 속도(정차 포함, 직선거리 기준)
-TRANSFER_PENALTY = 10        # 사당 등에서 4호선으로 갈아타는 비용
-BUS_PENALTY = 10             # 역이 멀면 버스를 한 번 더 탄다
-FAR_FROM_STATION_M = 1200    # 이 거리를 넘으면 역세권이 아니다
-BOARDING = 5                 # 대기·개찰
-
-
-def _load_cache() -> dict:
-    if CACHE.exists():
-        return json.loads(CACHE.read_text())
-    return {}
-
-
-def _save_cache(c: dict) -> None:
-    CACHE.write_text(json.dumps(c, ensure_ascii=False, indent=1))
+# 정거장당 고정 2.2분으로 잡으면 역간 거리가 먼 구간(안산선 등)을 과소평가한다.
+# 실제 역간 거리로 계산하고, 정차 시간을 더한다.
+RAIL_M_PER_MIN = 620     # 주행 속도(약 37km/h)
+DWELL_MIN = 0.6          # 역당 정차·감가속
+MIN_HOP_MIN = 1.5
+TRANSFER_MIN = 8         # 환승 1회
+TRANSFER_WALK_M = 300    # 이 거리 안의 다른 이름 역은 같은 환승역으로 본다
+BOARDING = 5             # 대기·개찰
+BUS_PENALTY = 10         # 역이 멀면 버스를 한 번 더 탄다
+FAR_FROM_STATION_M = 1200
+CANDIDATES = 5           # 가장 가까운 역이 반대 방향일 수 있다. 여러 역을 후보로 둔다
 
 
 def haversine(lat1, lon1, lat2, lon2) -> float:
@@ -45,8 +47,15 @@ def haversine(lat1, lon1, lat2, lon2) -> float:
     return 2 * r * asin(sqrt(h))
 
 
-def _query(url_q: str) -> tuple[float, float] | None:
-    url = f"{NOMINATIM}?{urllib.parse.urlencode({'format': 'json', 'limit': 1, 'countrycodes': 'kr', 'q': url_q})}"
+# --- 지오코딩 ---------------------------------------------------------------
+
+def _load_cache() -> dict:
+    return json.loads(CACHE.read_text()) if CACHE.exists() else {}
+
+
+def _query(q: str) -> tuple[float, float] | None:
+    url = f"{NOMINATIM}?" + urllib.parse.urlencode(
+        {"format": "json", "limit": 1, "countrycodes": "kr", "q": q})
     try:
         raw = subprocess.run(
             ["curl", "-sS", "-A", "housing-hunt/1.0", "--max-time", "20", url],
@@ -59,11 +68,7 @@ def _query(url_q: str) -> tuple[float, float] | None:
 
 
 def geocode(addr: str) -> tuple[float, float] | None:
-    """Nominatim 은 한국 주소에 약하다. 여러 표기로 차례로 시도하고 결과를 캐시한다.
-
-    마지막 수단으로 동(洞)까지만 넣는다. 건물 좌표는 못 얻어도 동 중심이면
-    출퇴근 시간 순위를 매기는 데는 충분하다.
-    """
+    """Nominatim 은 한국 주소에 약하다. 도로명 -> 지번 -> 동 순으로 시도하고 캐시한다."""
     cache = _load_cache()
     if addr in cache:
         v = cache[addr]
@@ -76,14 +81,12 @@ def geocode(addr: str) -> tuple[float, float] | None:
             break
 
     cache[addr] = list(result) if result else None
-    _save_cache(cache)
+    CACHE.write_text(json.dumps(cache, ensure_ascii=False, indent=1))
     return result
 
 
 def _candidates(addr: str) -> list[str]:
-    """'서울특별시 강동구 양재대로95길 36-9 (성내동 404-10)' 에서 시도 순서를 만든다."""
-    import re
-    inner = re.search(r"\((.*?)\)", addr)          # (성내동 404-10)
+    inner = re.search(r"\((.*?)\)", addr)
     bare = re.sub(r"\(.*?\)", " ", addr)
     parts = bare.split()
     gu = next((p for p in parts if p.endswith(("구", "시", "군"))), "")
@@ -95,17 +98,19 @@ def _candidates(addr: str) -> list[str]:
             road = f"{p} {num}".strip()
             break
 
+    # 시/구를 반드시 붙인다. 도로명만으로 재시도하면 엉뚱한 도시로 간다.
+    # '언남로 18'만 던지면 서초구가 아니라 용인 언남동이 잡혔다.
+    city = parts[0] if parts and parts[0].endswith(("시", "도")) else ""
+    where = ", ".join(x for x in (gu, city) if x)
+
     out = []
-    if road and gu:
-        out.append(f"{road}, {gu}")
-    if road:
-        out.append(road)
-    if inner:                                       # 지번: '성내동 404-10'
-        dong = inner.group(1).split()[0]
-        out.append(f"{inner.group(1)}, {gu}" if gu else inner.group(1))
-        if gu:
-            out.append(f"{dong}, {gu}")             # 최후: 동 중심 좌표
+    if road and where:
+        out.append(f"{road}, {where}")
+    if inner and where:
+        out.append(f"{inner.group(1)}, {where}")
+        out.append(f"{inner.group(1).split()[0]}, {where}")  # 최후: 동 중심
     out.append(bare.strip())
+
     seen, uniq = set(), []
     for q in out:
         if q and q not in seen:
@@ -114,62 +119,117 @@ def _candidates(addr: str) -> list[str]:
     return uniq
 
 
+# --- 출퇴근 -----------------------------------------------------------------
+
 class Commute:
-    """직장(정부과천청사, 4호선)까지의 소요시간을 근사한다.
+    def __init__(self, path: pathlib.Path | None = None):
+        data = json.loads((path or HERE / "stations.json").read_text())
+        self.stations = {s["name"]: s for s in data["stations"]}
+        self.work = data["workplace"]
+        if self.work not in self.stations:
+            raise RuntimeError(f"직장역 '{self.work}' 이 그래프에 없다")
 
-    가장 가까운 역까지 걷고, 그 역이 4호선이면 정거장 수로 시간을 낸다.
-    4호선이 아니면 그 역에서 4호선 환승역까지 타고 가는 시간을 직선거리로 근사한 뒤
-    환승 비용을 얹는다. 서초·동작처럼 2·3호선을 타고 사당에서 갈아타는 동네를
-    '4호선 역까지 걸어간다'고 잘못 계산하지 않기 위한 것이다.
-    """
+        # (역, 노선) -> [(이웃역, 노선, 소요분)]
+        self.adj: dict[tuple, list[tuple]] = {}
+        for a, b, line in data["edges"]:
+            sa, sb = self.stations.get(a), self.stations.get(b)
+            if not sa or not sb:
+                continue
+            d = haversine(sa["lat"], sa["lon"], sb["lat"], sb["lon"])
+            cost = max(MIN_HOP_MIN, d / RAIL_M_PER_MIN + DWELL_MIN)
+            self.adj.setdefault((a, line), []).append((b, line, cost))
 
-    def __init__(self, stations_path: pathlib.Path | None = None):
-        data = json.loads((stations_path or HERE / "stations.json").read_text())
-        self.stations = data["stations"]
-        self.line4 = [s for s in self.stations if s.get("line4")]
-        self.work = next(s for s in self.line4
-                         if s["name"] == data["workplace_station"])
+        # 같은 환승역인데 노선마다 이름이 다른 경우가 있다. 4호선은 '총신대입구',
+        # 7호선은 '이수'로 등록돼 있어서 이름만으로 이으면 환승이 끊긴다.
+        # 그 탓에 상도동(7호선)의 철도 시간이 55분으로 나왔다. 실제는 30분대다.
+        # 좌표가 가까운 역끼리도 환승으로 잇는다.
+        self.nearby: dict[str, list[str]] = {}
+        names = list(self.stations)
+        for i, a in enumerate(names):
+            sa = self.stations[a]
+            for b in names[i + 1:]:
+                sb = self.stations[b]
+                if abs(sa["lat"] - sb["lat"]) > 0.004:
+                    continue
+                if haversine(sa["lat"], sa["lon"], sb["lat"], sb["lon"]) <= TRANSFER_WALK_M:
+                    self.nearby.setdefault(a, []).append(b)
+                    self.nearby.setdefault(b, []).append(a)
 
-    def nearest(self, lat: float, lon: float, only4: bool = False) -> tuple[dict, float]:
-        pool = self.line4 if only4 else self.stations
-        best, best_d = None, float("inf")
-        for s in pool:
-            d = haversine(lat, lon, s["lat"], s["lon"])
-            if d < best_d:
-                best, best_d = s, d
-        return best, best_d
+        self.rail = self._times_to_work()
+
+    def _times_to_work(self) -> dict[str, float]:
+        """직장역에서 모든 역까지의 최소 소요시간. 한 번만 계산한다.
+
+        상태를 (역, 타고 있는 노선)으로 둬야 환승 비용을 제대로 문다.
+        같은 역에서 노선을 갈아타면 TRANSFER_MIN 을 더한다.
+        """
+        dist: dict[tuple, float] = {}
+        pq = [(0.0, self.work, line) for line in self.stations[self.work]["lines"]]
+        heapq.heapify(pq)
+        for line in self.stations[self.work]["lines"]:
+            dist[(self.work, line)] = 0.0
+
+        while pq:
+            d, station, line = heapq.heappop(pq)
+            if d > dist.get((station, line), float("inf")):
+                continue
+            # 같은 역에서 다른 노선으로 환승
+            for other in self.stations[station]["lines"]:
+                if other == line:
+                    continue
+                nd = d + TRANSFER_MIN
+                if nd < dist.get((station, other), float("inf")):
+                    dist[(station, other)] = nd
+                    heapq.heappush(pq, (nd, station, other))
+            # 이름은 다르지만 실제로는 같은 환승역(총신대입구 <-> 이수)
+            for twin in self.nearby.get(station, []):
+                for other in self.stations[twin]["lines"]:
+                    nd = d + TRANSFER_MIN
+                    if nd < dist.get((twin, other), float("inf")):
+                        dist[(twin, other)] = nd
+                        heapq.heappush(pq, (nd, twin, other))
+            # 같은 노선으로 한 정거장
+            for nxt, ln, cost in self.adj.get((station, line), []):
+                nd = d + cost
+                if nd < dist.get((nxt, ln), float("inf")):
+                    dist[(nxt, ln)] = nd
+                    heapq.heappush(pq, (nd, nxt, ln))
+
+        best: dict[str, float] = {}
+        for (station, _), d in dist.items():
+            if d < best.get(station, float("inf")):
+                best[station] = d
+        return best
 
     def estimate(self, addr: str) -> dict | None:
-        """주소 -> {역, 도보분, 총분, 환승여부}. 좌표를 못 찾으면 None."""
+        """좌표를 못 찾으면 None. 가장 가까운 역이 반대 방향일 수 있으므로
+        후보 여러 개를 놓고 '도보 + 철도'의 합이 가장 작은 것을 고른다."""
         pos = geocode(addr)
         if not pos:
             return None
-        station, dist = self.nearest(*pos)
-        walk = dist * DETOUR / WALK_M_PER_MIN
-        needs_bus = dist > FAR_FROM_STATION_M
 
-        if station.get("line4"):
-            stops = abs(station["idx"] - self.work["idx"])
-            rail = stops * MIN_PER_STOP
-            transfer = False
-        else:
-            # 이 역에서 가장 가까운 4호선 역으로 갈아탄다고 본다.
-            hub, _ = self.nearest(station["lat"], station["lon"], only4=True)
-            leg1 = haversine(station["lat"], station["lon"],
-                             hub["lat"], hub["lon"]) / RAIL_M_PER_MIN
-            leg2 = abs(hub["idx"] - self.work["idx"]) * MIN_PER_STOP
-            rail = leg1 + leg2 + TRANSFER_PENALTY
-            stops = abs(hub["idx"] - self.work["idx"])
-            transfer = True
+        near = sorted(
+            ((haversine(*pos, s["lat"], s["lon"]), s) for s in self.stations.values()),
+            key=lambda x: x[0])[:CANDIDATES]
 
-        total = walk + rail + BOARDING + (BUS_PENALTY if needs_bus else 0)
-        return {
-            "station": station["name"],
-            "walk_min": round(walk),
-            "walk_m": round(dist),
-            "stops": stops,
-            "total_min": round(total),
-            "needs_bus": needs_bus,
-            "transfer": transfer,
-            "lat": pos[0], "lon": pos[1],
-        }
+        best = None
+        for dist_m, s in near:
+            rail = self.rail.get(s["name"])
+            if rail is None:      # 직장과 연결되지 않은 노선
+                continue
+            walk = dist_m * DETOUR / WALK_M_PER_MIN
+            far = dist_m > FAR_FROM_STATION_M
+            total = walk + rail + BOARDING + (BUS_PENALTY if far else 0)
+            cand = {
+                "station": s["name"],
+                "lines": s["lines"],
+                "walk_min": round(walk),
+                "walk_m": round(dist_m),
+                "rail_min": round(rail),
+                "total_min": round(total),
+                "needs_bus": far,
+                "lat": pos[0], "lon": pos[1],
+            }
+            if best is None or cand["total_min"] < best["total_min"]:
+                best = cand
+        return best
