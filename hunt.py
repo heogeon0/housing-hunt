@@ -78,21 +78,32 @@ def criteria(notice: str) -> dict:
     return out
 
 
-def deadline_from_notice(notice: str) -> str:
-    """SH 목록에는 접수기간이 없다. 게시일만 준다. 공고문 일정표에서 마감일을 읽는다.
+DATE_TIME = (r"['‘’]?(\d{2,4})?\.?\s*(\d{1,2})\.\s*(\d{1,2})\.\s*"
+             r"\([월화수목금토일]\)\s*(\d{1,2}:\d{2})")
 
-    공고문 표기: 신청접수(온라인)'26. 7. 13.(월)10:00 ~'26. 7. 15.(수)17:00
+
+def deadline_from_notice(notice: str) -> str:
+    """SH 목록에는 접수기간이 없다. 게시일만 준다. 공고문에서 마감일을 읽는다.
+
+    표기가 추출기마다 다르다. 시각(10:00 ~ 17:00)이 붙은 날짜 범위는 접수 일정뿐이라
+    그걸 앵커로 잡는다.
+      pypdf:     신청접수(온라인)'26. 7. 13.(월)10:00 ~'26. 7. 15.(수)17:00
+      pdftotext: 인터넷청약 신청접수: 2026. 7. 13.(월) 10:00 ~ 7. 15.(수) 17:00
+                 (끝 날짜에 연도가 없다)
     이걸 못 읽으면 마감 경고가 안 뜨고, 마감을 놓친다.
     """
     flat = " ".join(notice.split())
-    m = re.search(
-        r"신청접수.{0,20}?['‘’](\d{2})\.\s*(\d{1,2})\.\s*(\d{1,2})\..{0,12}?"
-        r"~\s*['‘’]?(\d{2})\.\s*(\d{1,2})\.\s*(\d{1,2})\.",
-        flat)
+    m = re.search(DATE_TIME + r"\s*~\s*" + DATE_TIME, flat)
     if not m:
         return ""
-    yy, mm, dd = m.group(4), m.group(5), m.group(6)
-    return f"20{yy}.{int(mm):02d}.{int(dd):02d}"
+    y1, _, _, _, y2, mm, dd, _ = m.groups()
+    year = y2 or y1
+    if not year:
+        return ""
+    year = int(year)
+    if year < 100:                      # '26 -> 2026
+        year += 2000
+    return f"{year}.{int(mm):02d}.{int(dd):02d}"
 
 
 def judge(crit: dict) -> list[str]:

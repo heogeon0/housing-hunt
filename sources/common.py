@@ -112,14 +112,43 @@ def pdf_text(blob: bytes) -> str:
     pypdf 는 표의 셀 경계에 공백이 아니라 NUL(U+0000) 을 넣는다. str.split() 은
     NUL 을 공백으로 치지 않아서, 정리하지 않으면 '100%\\x00이하4,576,036' 같은
     문자열이 되어 정규식이 전부 빗나간다.
+
+    pypdf 를 못 쓰는 환경이 있다. 클라우드 routine 에서 pypdf -> cryptography ->
+    cffi 체인이 깨져서 import 부터 터졌다. 그래서 pdftotext 로 물러설 수 있게 한다.
+    우리 PDF 는 암호화돼 있지 않으니 어느 쪽으로 읽든 결과는 같다.
     """
+    raw = _pypdf_text(blob)
+    if raw is None:
+        raw = _pdftotext(blob)
+    if raw is None:
+        raise RuntimeError("PDF 를 읽을 수단이 없다 (pypdf / pdftotext 둘 다 실패)")
+    return re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", " ", raw)
+
+
+def _pypdf_text(blob: bytes) -> str | None:
     try:
         import pypdf
-    except ImportError as e:
-        raise RuntimeError("pypdf 가 필요하다: pip install pypdf") from e
-    reader = pypdf.PdfReader(io.BytesIO(blob))
-    raw = "\n".join(page.extract_text() or "" for page in reader.pages)
-    return re.sub(r"[\x00-\x08\x0b\x0c\x0e-\x1f]", " ", raw)
+    except Exception:      # ImportError 뿐 아니라 cffi 누락 같은 것도 잡는다
+        return None
+    try:
+        reader = pypdf.PdfReader(io.BytesIO(blob))
+        return "\n".join(page.extract_text() or "" for page in reader.pages)
+    except Exception:
+        return None
+
+
+def _pdftotext(blob: bytes) -> str | None:
+    """poppler 의 pdftotext. -layout 을 주면 표의 열 간격이 보존된다."""
+    import shutil
+    import tempfile
+    if not shutil.which("pdftotext"):
+        return None
+    with tempfile.NamedTemporaryFile(suffix=".pdf") as f:
+        f.write(blob)
+        f.flush()
+        p = subprocess.run(["pdftotext", "-layout", f.name, "-"],
+                           capture_output=True, timeout=120)
+    return p.stdout.decode("utf-8", "replace") if p.returncode == 0 else None
 
 
 def money(v) -> int | None:

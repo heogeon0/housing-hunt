@@ -1,1 +1,5 @@
+# pypdf 가 cryptography 를 끌어오고 그게 cffi 를 요구한다. 클라우드 환경에
+# cffi 가 없어서 import 부터 터졌다. 명시적으로 박아둔다.
+# 그래도 실패하면 sources/common.py 가 pdftotext(poppler)로 물러선다.
+cffi>=1.16
 pypdf>=4.0
