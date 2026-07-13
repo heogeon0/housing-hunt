@@ -2,6 +2,7 @@ __pycache__/
 *.pyc
 .geocache.json
 _overpass.json
+_subway.json
 .playwright-mcp/
 *.pdf
 *.xlsx
