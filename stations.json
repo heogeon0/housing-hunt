@@ -1,0 +1,3673 @@
+{
+ "workplace_station": "정부과천청사",
+ "stations": [
+  {
+   "name": "당고개",
+   "idx": 0,
+   "lat": 37.670098,
+   "lon": 127.078924,
+   "line4": true
+  },
+  {
+   "name": "상계",
+   "idx": 1,
+   "lat": 37.660765,
+   "lon": 127.073439,
+   "line4": true
+  },
+  {
+   "name": "노원",
+   "idx": 2,
+   "lat": 37.654591,
+   "lon": 127.060493,
+   "line4": true
+  },
+  {
+   "name": "창동",
+   "idx": 3,
+   "lat": 37.652598,
+   "lon": 127.047978,
+   "line4": true
+  },
+  {
+   "name": "쌍문",
+   "idx": 4,
+   "lat": 37.648403,
+   "lon": 127.034579,
+   "line4": true
+  },
+  {
+   "name": "수유",
+   "idx": 5,
+   "lat": 37.637993,
+   "lon": 127.025723,
+   "line4": true
+  },
+  {
+   "name": "미아",
+   "idx": 6,
+   "lat": 37.626494,
+   "lon": 127.026109,
+   "line4": true
+  },
+  {
+   "name": "미아사거리",
+   "idx": 7,
+   "lat": 37.613185,
+   "lon": 127.030091,
+   "line4": true
+  },
+  {
+   "name": "길음",
+   "idx": 8,
+   "lat": 37.60316,
+   "lon": 127.024852,
+   "line4": true
+  },
+  {
+   "name": "성신여대입구",
+   "idx": 9,
+   "lat": 37.592675,
+   "lon": 127.016476,
+   "line4": true
+  },
+  {
+   "name": "한성대입구",
+   "idx": 10,
+   "lat": 37.588514,
+   "lon": 127.005962,
+   "line4": true
+  },
+  {
+   "name": "혜화",
+   "idx": 11,
+   "lat": 37.582138,
+   "lon": 127.001953,
+   "line4": true
+  },
+  {
+   "name": "동대문",
+   "idx": 12,
+   "lat": 37.571862,
+   "lon": 127.011489,
+   "line4": true
+  },
+  {
+   "name": "충무로",
+   "idx": 14,
+   "lat": 37.561202,
+   "lon": 126.994109,
+   "line4": true
+  },
+  {
+   "name": "명동",
+   "idx": 15,
+   "lat": 37.560898,
+   "lon": 126.986376,
+   "line4": true
+  },
+  {
+   "name": "회현",
+   "idx": 16,
+   "lat": 37.558698,
+   "lon": 126.978417,
+   "line4": true
+  },
+  {
+   "name": "서울역",
+   "idx": 17,
+   "lat": 37.554555,
+   "lon": 126.970779,
+   "line4": true
+  },
+  {
+   "name": "숙대입구",
+   "idx": 18,
+   "lat": 37.545134,
+   "lon": 126.971957,
+   "line4": true
+  },
+  {
+   "name": "삼각지",
+   "idx": 19,
+   "lat": 37.535478,
+   "lon": 126.973889,
+   "line4": true
+  },
+  {
+   "name": "신용산",
+   "idx": 20,
+   "lat": 37.529174,
+   "lon": 126.967857,
+   "line4": true
+  },
+  {
+   "name": "이촌",
+   "idx": 21,
+   "lat": 37.52244,
+   "lon": 126.973364,
+   "line4": true
+  },
+  {
+   "name": "동작",
+   "idx": 22,
+   "lat": 37.502971,
+   "lon": 126.978203,
+   "line4": true
+  },
+  {
+   "name": "총신대입구",
+   "idx": 23,
+   "lat": 37.48678,
+   "lon": 126.982237,
+   "line4": true
+  },
+  {
+   "name": "사당",
+   "idx": 24,
+   "lat": 37.476583,
+   "lon": 126.981668,
+   "line4": true
+  },
+  {
+   "name": "남태령",
+   "idx": 25,
+   "lat": 37.464656,
+   "lon": 126.988698,
+   "line4": true
+  },
+  {
+   "name": "선바위",
+   "idx": 26,
+   "lat": 37.451805,
+   "lon": 127.002111,
+   "line4": true
+  },
+  {
+   "name": "경마공원",
+   "idx": 27,
+   "lat": 37.443765,
+   "lon": 127.007896,
+   "line4": true
+  },
+  {
+   "name": "대공원",
+   "idx": 28,
+   "lat": 37.435803,
+   "lon": 127.006608,
+   "line4": true
+  },
+  {
+   "name": "과천",
+   "idx": 29,
+   "lat": 37.433074,
+   "lon": 126.996958,
+   "line4": true
+  },
+  {
+   "name": "정부과천청사",
+   "idx": 30,
+   "lat": 37.426471,
+   "lon": 126.98975,
+   "line4": true
+  },
+  {
+   "name": "인덕원",
+   "idx": 31,
+   "lat": 37.401632,
+   "lon": 126.976966,
+   "line4": true
+  },
+  {
+   "name": "평촌",
+   "idx": 32,
+   "lat": 37.394288,
+   "lon": 126.96388,
+   "line4": true
+  },
+  {
+   "name": "범계",
+   "idx": 33,
+   "lat": 37.389913,
+   "lon": 126.95091,
+   "line4": true
+  },
+  {
+   "name": "금정",
+   "idx": 34,
+   "lat": 37.372307,
+   "lon": 126.943397,
+   "line4": true
+  },
+  {
+   "name": "산본",
+   "idx": 35,
+   "lat": 37.358074,
+   "lon": 126.933096,
+   "line4": true
+  },
+  {
+   "name": "수리산",
+   "idx": 36,
+   "lat": 37.35042,
+   "lon": 126.925558,
+   "line4": true
+  },
+  {
+   "name": "대야미",
+   "idx": 37,
+   "lat": 37.327926,
+   "lon": 126.916862,
+   "line4": true
+  },
+  {
+   "name": "반월",
+   "idx": 38,
+   "lat": 37.312422,
+   "lon": 126.903836,
+   "line4": true
+  },
+  {
+   "name": "상록수",
+   "idx": 39,
+   "lat": 37.302813,
+   "lon": 126.866778,
+   "line4": true
+  },
+  {
+   "name": "한대앞",
+   "idx": 40,
+   "lat": 37.309735,
+   "lon": 126.853614,
+   "line4": true
+  },
+  {
+   "name": "중앙",
+   "idx": 41,
+   "lat": 37.31603,
+   "lon": 126.838529,
+   "line4": true
+  },
+  {
+   "name": "고잔",
+   "idx": 42,
+   "lat": 37.316851,
+   "lon": 126.823101,
+   "line4": true
+  },
+  {
+   "name": "초지",
+   "idx": 43,
+   "lat": 37.31984,
+   "lon": 126.80788,
+   "line4": true
+  },
+  {
+   "name": "안산",
+   "idx": 44,
+   "lat": 37.327047,
+   "lon": 126.788797,
+   "line4": true
+  },
+  {
+   "name": "신길온천",
+   "idx": 45,
+   "lat": 37.337538,
+   "lon": 126.7673,
+   "line4": true
+  },
+  {
+   "name": "정왕",
+   "idx": 46,
+   "lat": 37.35181,
+   "lon": 126.742954,
+   "line4": true
+  },
+  {
+   "name": "오이도",
+   "idx": 47,
+   "lat": 37.361925,
+   "lon": 126.738494,
+   "line4": true
+  },
+  {
+   "name": "명학",
+   "idx": null,
+   "lat": 37.384394,
+   "lon": 126.935609,
+   "line4": false
+  },
+  {
+   "name": "관악",
+   "idx": null,
+   "lat": 37.418724,
+   "lon": 126.909154,
+   "line4": false
+  },
+  {
+   "name": "군포",
+   "idx": null,
+   "lat": 37.353575,
+   "lon": 126.948461,
+   "line4": false
+  },
+  {
+   "name": "성균관대",
+   "idx": null,
+   "lat": 37.300285,
+   "lon": 126.971178,
+   "line4": false
+  },
+  {
+   "name": "제기동",
+   "idx": null,
+   "lat": 37.578378,
+   "lon": 127.034467,
+   "line4": false
+  },
+  {
+   "name": "신이문",
+   "idx": null,
+   "lat": 37.601638,
+   "lon": 127.06729,
+   "line4": false
+  },
+  {
+   "name": "회기",
+   "idx": null,
+   "lat": 37.589497,
+   "lon": 127.057624,
+   "line4": false
+  },
+  {
+   "name": "월계",
+   "idx": null,
+   "lat": 37.633063,
+   "lon": 127.058865,
+   "line4": false
+  },
+  {
+   "name": "녹천",
+   "idx": null,
+   "lat": 37.644627,
+   "lon": 127.051398,
+   "line4": false
+  },
+  {
+   "name": "광운대",
+   "idx": null,
+   "lat": 37.623699,
+   "lon": 127.061819,
+   "line4": false
+  },
+  {
+   "name": "방학",
+   "idx": null,
+   "lat": 37.66769,
+   "lon": 127.044303,
+   "line4": false
+  },
+  {
+   "name": "망월사",
+   "idx": null,
+   "lat": 37.710253,
+   "lon": 127.047397,
+   "line4": false
+  },
+  {
+   "name": "오류동",
+   "idx": null,
+   "lat": 37.494347,
+   "lon": 126.844537,
+   "line4": false
+  },
+  {
+   "name": "개봉",
+   "idx": null,
+   "lat": 37.494593,
+   "lon": 126.858754,
+   "line4": false
+  },
+  {
+   "name": "구일",
+   "idx": null,
+   "lat": 37.496207,
+   "lon": 126.869706,
+   "line4": false
+  },
+  {
+   "name": "중동",
+   "idx": null,
+   "lat": 37.486778,
+   "lon": 126.763967,
+   "line4": false
+  },
+  {
+   "name": "송내",
+   "idx": null,
+   "lat": 37.487704,
+   "lon": 126.752885,
+   "line4": false
+  },
+  {
+   "name": "부평",
+   "idx": null,
+   "lat": 37.489454,
+   "lon": 126.724559,
+   "line4": false
+  },
+  {
+   "name": "소사",
+   "idx": null,
+   "lat": 37.482766,
+   "lon": 126.79559,
+   "line4": false
+  },
+  {
+   "name": "부천",
+   "idx": null,
+   "lat": 37.48411,
+   "lon": 126.782735,
+   "line4": false
+  },
+  {
+   "name": "백운",
+   "idx": null,
+   "lat": 37.483123,
+   "lon": 126.707111,
+   "line4": false
+  },
+  {
+   "name": "동암",
+   "idx": null,
+   "lat": 37.471046,
+   "lon": 126.702877,
+   "line4": false
+  },
+  {
+   "name": "일원",
+   "idx": null,
+   "lat": 37.483692,
+   "lon": 127.084377,
+   "line4": false
+  },
+  {
+   "name": "양원",
+   "idx": null,
+   "lat": 37.606582,
+   "lon": 127.107935,
+   "line4": false
+  },
+  {
+   "name": "구리",
+   "idx": null,
+   "lat": 37.603252,
+   "lon": 127.143375,
+   "line4": false
+  },
+  {
+   "name": "한남",
+   "idx": null,
+   "lat": 37.529445,
+   "lon": 127.009242,
+   "line4": false
+  },
+  {
+   "name": "일산",
+   "idx": null,
+   "lat": 37.682219,
+   "lon": 126.769498,
+   "line4": false
+  },
+  {
+   "name": "수색",
+   "idx": null,
+   "lat": 37.580758,
+   "lon": 126.895553,
+   "line4": false
+  },
+  {
+   "name": "일영",
+   "idx": null,
+   "lat": 37.700571,
+   "lon": 126.928969,
+   "line4": false
+  },
+  {
+   "name": "한국도심공항수락터미널",
+   "idx": null,
+   "lat": 37.678792,
+   "lon": 127.053523,
+   "line4": false
+  },
+  {
+   "name": "인천종합터미널",
+   "idx": null,
+   "lat": 37.441743,
+   "lon": 126.701524,
+   "line4": false
+  },
+  {
+   "name": "금호",
+   "idx": null,
+   "lat": 37.548452,
+   "lon": 127.015646,
+   "line4": false
+  },
+  {
+   "name": "망포",
+   "idx": null,
+   "lat": 37.245765,
+   "lon": 127.056901,
+   "line4": false
+  },
+  {
+   "name": "남산케이블카",
+   "idx": null,
+   "lat": 37.55659,
+   "lon": 126.984046,
+   "line4": false
+  },
+  {
+   "name": "중랑",
+   "idx": null,
+   "lat": 37.594976,
+   "lon": 127.076311,
+   "line4": false
+  },
+  {
+   "name": "당정",
+   "idx": null,
+   "lat": 37.343432,
+   "lon": 126.948361,
+   "line4": false
+  },
+  {
+   "name": "망우",
+   "idx": null,
+   "lat": 37.599635,
+   "lon": 127.091858,
+   "line4": false
+  },
+  {
+   "name": "성남종합버스터미널",
+   "idx": null,
+   "lat": 37.413108,
+   "lon": 127.127113,
+   "line4": false
+  },
+  {
+   "name": "국회의사당",
+   "idx": null,
+   "lat": 37.528016,
+   "lon": 126.917964,
+   "line4": false
+  },
+  {
+   "name": "구성",
+   "idx": null,
+   "lat": 37.299009,
+   "lon": 127.105754,
+   "line4": false
+  },
+  {
+   "name": "신갈",
+   "idx": null,
+   "lat": 37.286154,
+   "lon": 127.111375,
+   "line4": false
+  },
+  {
+   "name": "노들",
+   "idx": null,
+   "lat": 37.512974,
+   "lon": 126.95355,
+   "line4": false
+  },
+  {
+   "name": "신설동",
+   "idx": null,
+   "lat": 37.576054,
+   "lon": 127.024666,
+   "line4": false
+  },
+  {
+   "name": "한국항공대",
+   "idx": null,
+   "lat": 37.602781,
+   "lon": 126.868397,
+   "line4": false
+  },
+  {
+   "name": "곡산",
+   "idx": null,
+   "lat": 37.645746,
+   "lon": 126.80181,
+   "line4": false
+  },
+  {
+   "name": "백마",
+   "idx": null,
+   "lat": 37.65833,
+   "lon": 126.794475,
+   "line4": false
+  },
+  {
+   "name": "풍산",
+   "idx": null,
+   "lat": 37.672348,
+   "lon": 126.786243,
+   "line4": false
+  },
+  {
+   "name": "용답",
+   "idx": null,
+   "lat": 37.56209,
+   "lon": 127.050861,
+   "line4": false
+  },
+  {
+   "name": "신촌",
+   "idx": null,
+   "lat": 37.559781,
+   "lon": 126.942358,
+   "line4": false
+  },
+  {
+   "name": "수서",
+   "idx": null,
+   "lat": 37.487416,
+   "lon": 127.10184,
+   "line4": false
+  },
+  {
+   "name": "광명",
+   "idx": null,
+   "lat": 37.41638,
+   "lon": 126.884698,
+   "line4": false
+  },
+  {
+   "name": "사릉",
+   "idx": null,
+   "lat": 37.651099,
+   "lon": 127.176896,
+   "line4": false
+  },
+  {
+   "name": "계양",
+   "idx": null,
+   "lat": 37.571501,
+   "lon": 126.735858,
+   "line4": false
+  },
+  {
+   "name": "귤현",
+   "idx": null,
+   "lat": 37.566354,
+   "lon": 126.742655,
+   "line4": false
+  },
+  {
+   "name": "부개",
+   "idx": null,
+   "lat": 37.488491,
+   "lon": 126.740606,
+   "line4": false
+  },
+  {
+   "name": "달월",
+   "idx": null,
+   "lat": 37.379979,
+   "lon": 126.745357,
+   "line4": false
+  },
+  {
+   "name": "충정로",
+   "idx": null,
+   "lat": 37.559371,
+   "lon": 126.962911,
+   "line4": false
+  },
+  {
+   "name": "상동",
+   "idx": null,
+   "lat": 37.505836,
+   "lon": 126.753174,
+   "line4": false
+  },
+  {
+   "name": "서강대",
+   "idx": null,
+   "lat": 37.552353,
+   "lon": 126.935184,
+   "line4": false
+  },
+  {
+   "name": "종로5가",
+   "idx": null,
+   "lat": 37.570987,
+   "lon": 127.002022,
+   "line4": false
+  },
+  {
+   "name": "고속터미널",
+   "idx": null,
+   "lat": 37.505083,
+   "lon": 127.004978,
+   "line4": false
+  },
+  {
+   "name": "청량리",
+   "idx": null,
+   "lat": 37.580596,
+   "lon": 127.048257,
+   "line4": false
+  },
+  {
+   "name": "신갈영덕버스정류장(부산방향)",
+   "idx": null,
+   "lat": 37.272712,
+   "lon": 127.103469,
+   "line4": false
+  },
+  {
+   "name": "의왕고천시외버스정류장",
+   "idx": null,
+   "lat": 37.347898,
+   "lon": 126.973809,
+   "line4": false
+  },
+  {
+   "name": "봉은사",
+   "idx": null,
+   "lat": 37.514187,
+   "lon": 127.060241,
+   "line4": false
+  },
+  {
+   "name": "언주",
+   "idx": null,
+   "lat": 37.507321,
+   "lon": 127.033875,
+   "line4": false
+  },
+  {
+   "name": "삼성중앙",
+   "idx": null,
+   "lat": 37.513095,
+   "lon": 127.053475,
+   "line4": false
+  },
+  {
+   "name": "사평",
+   "idx": null,
+   "lat": 37.504295,
+   "lon": 127.01514,
+   "line4": false
+  },
+  {
+   "name": "선정릉",
+   "idx": null,
+   "lat": 37.510253,
+   "lon": 127.043859,
+   "line4": false
+  },
+  {
+   "name": "신논현",
+   "idx": null,
+   "lat": 37.504322,
+   "lon": 127.024531,
+   "line4": false
+  },
+  {
+   "name": "외대앞",
+   "idx": null,
+   "lat": 37.596306,
+   "lon": 127.063743,
+   "line4": false
+  },
+  {
+   "name": "구반포",
+   "idx": null,
+   "lat": 37.50129,
+   "lon": 126.986785,
+   "line4": false
+  },
+  {
+   "name": "흑석",
+   "idx": null,
+   "lat": 37.508382,
+   "lon": 126.963949,
+   "line4": false
+  },
+  {
+   "name": "신반포",
+   "idx": null,
+   "lat": 37.503601,
+   "lon": 126.996418,
+   "line4": false
+  },
+  {
+   "name": "군포.산본(공항버스)",
+   "idx": null,
+   "lat": 37.362566,
+   "lon": 126.927264,
+   "line4": false
+  },
+  {
+   "name": "야당",
+   "idx": null,
+   "lat": 37.712967,
+   "lon": 126.761523,
+   "line4": false
+  },
+  {
+   "name": "의왕",
+   "idx": null,
+   "lat": 37.320998,
+   "lon": 126.948034,
+   "line4": false
+  },
+  {
+   "name": "화서",
+   "idx": null,
+   "lat": 37.283914,
+   "lon": 126.989614,
+   "line4": false
+  },
+  {
+   "name": "수원",
+   "idx": null,
+   "lat": 37.26581,
+   "lon": 126.99991,
+   "line4": false
+  },
+  {
+   "name": "세류",
+   "idx": null,
+   "lat": 37.244115,
+   "lon": 127.013722,
+   "line4": false
+  },
+  {
+   "name": "병점",
+   "idx": null,
+   "lat": 37.206834,
+   "lon": 127.033129,
+   "line4": false
+  },
+  {
+   "name": "온수",
+   "idx": null,
+   "lat": 37.492299,
+   "lon": 126.823534,
+   "line4": false
+  },
+  {
+   "name": "왕십리",
+   "idx": null,
+   "lat": 37.561486,
+   "lon": 127.038579,
+   "line4": false
+  },
+  {
+   "name": "안양.범계(공항버스)",
+   "idx": null,
+   "lat": 37.390889,
+   "lon": 126.947977,
+   "line4": false
+  },
+  {
+   "name": "응봉",
+   "idx": null,
+   "lat": 37.550276,
+   "lon": 127.034728,
+   "line4": false
+  },
+  {
+   "name": "도봉",
+   "idx": null,
+   "lat": 37.679208,
+   "lon": 127.045547,
+   "line4": false
+  },
+  {
+   "name": "서빙고",
+   "idx": null,
+   "lat": 37.519574,
+   "lon": 126.988318,
+   "line4": false
+  },
+  {
+   "name": "월곶",
+   "idx": null,
+   "lat": 37.391794,
+   "lon": 126.7427,
+   "line4": false
+  },
+  {
+   "name": "양재",
+   "idx": null,
+   "lat": 37.4844,
+   "lon": 127.034145,
+   "line4": false
+  },
+  {
+   "name": "복정",
+   "idx": null,
+   "lat": 37.470577,
+   "lon": 127.126713,
+   "line4": false
+  },
+  {
+   "name": "운연",
+   "idx": null,
+   "lat": 37.439656,
+   "lon": 126.759632,
+   "line4": false
+  },
+  {
+   "name": "탄현",
+   "idx": null,
+   "lat": 37.694105,
+   "lon": 126.761026,
+   "line4": false
+  },
+  {
+   "name": "행신",
+   "idx": null,
+   "lat": 37.612035,
+   "lon": 126.834058,
+   "line4": false
+  },
+  {
+   "name": "석수",
+   "idx": null,
+   "lat": 37.435133,
+   "lon": 126.902306,
+   "line4": false
+  },
+  {
+   "name": "독산",
+   "idx": null,
+   "lat": 37.466074,
+   "lon": 126.889484,
+   "line4": false
+  },
+  {
+   "name": "안양",
+   "idx": null,
+   "lat": 37.40163,
+   "lon": 126.922883,
+   "line4": false
+  },
+  {
+   "name": "도농",
+   "idx": null,
+   "lat": 37.608783,
+   "lon": 127.161187,
+   "line4": false
+  },
+  {
+   "name": "양정",
+   "idx": null,
+   "lat": 37.60402,
+   "lon": 127.194614,
+   "line4": false
+  },
+  {
+   "name": "신내",
+   "idx": null,
+   "lat": 37.612648,
+   "lon": 127.103242,
+   "line4": false
+  },
+  {
+   "name": "금천구청",
+   "idx": null,
+   "lat": 37.455813,
+   "lon": 126.8939,
+   "line4": false
+  },
+  {
+   "name": "강매",
+   "idx": null,
+   "lat": 37.612287,
+   "lon": 126.844528,
+   "line4": false
+  },
+  {
+   "name": "능곡",
+   "idx": null,
+   "lat": 37.61894,
+   "lon": 126.820516,
+   "line4": false
+  },
+  {
+   "name": "암사사공원",
+   "idx": null,
+   "lat": 37.557047,
+   "lon": 127.137432,
+   "line4": false
+  },
+  {
+   "name": "고색",
+   "idx": null,
+   "lat": 37.249691,
+   "lon": 126.98046,
+   "line4": false
+  },
+  {
+   "name": "오목천",
+   "idx": null,
+   "lat": 37.243313,
+   "lon": 126.963742,
+   "line4": false
+  },
+  {
+   "name": "어천",
+   "idx": null,
+   "lat": 37.25012,
+   "lon": 126.908915,
+   "line4": false
+  },
+  {
+   "name": "야목",
+   "idx": null,
+   "lat": 37.261218,
+   "lon": 126.884022,
+   "line4": false
+  },
+  {
+   "name": "사리",
+   "idx": null,
+   "lat": 37.290865,
+   "lon": 126.857196,
+   "line4": false
+  },
+  {
+   "name": "동탄",
+   "idx": null,
+   "lat": 37.200359,
+   "lon": 127.095576,
+   "line4": false
+  },
+  {
+   "name": "보문",
+   "idx": null,
+   "lat": 37.585274,
+   "lon": 127.019374,
+   "line4": false
+  },
+  {
+   "name": "서울",
+   "idx": null,
+   "lat": 37.554555,
+   "lon": 126.970779,
+   "line4": false
+  },
+  {
+   "name": "도곡",
+   "idx": null,
+   "lat": 37.490906,
+   "lon": 127.055468,
+   "line4": false
+  },
+  {
+   "name": "김포공항",
+   "idx": null,
+   "lat": 37.561925,
+   "lon": 126.801393,
+   "line4": false
+  },
+  {
+   "name": "동대문사문화공원",
+   "idx": null,
+   "lat": 37.565261,
+   "lon": 127.008123,
+   "line4": false
+  },
+  {
+   "name": "구로",
+   "idx": null,
+   "lat": 37.503447,
+   "lon": 126.882509,
+   "line4": false
+  },
+  {
+   "name": "북한산보국문",
+   "idx": null,
+   "lat": 37.61218,
+   "lon": 127.008174,
+   "line4": false
+  },
+  {
+   "name": "안국",
+   "idx": null,
+   "lat": 37.576828,
+   "lon": 126.986171,
+   "line4": false
+  },
+  {
+   "name": "강일",
+   "idx": null,
+   "lat": 37.557482,
+   "lon": 127.175763,
+   "line4": false
+  },
+  {
+   "name": "천호",
+   "idx": null,
+   "lat": 37.538522,
+   "lon": 127.123402,
+   "line4": false
+  },
+  {
+   "name": "인천시청",
+   "idx": null,
+   "lat": 37.457291,
+   "lon": 126.702085,
+   "line4": false
+  },
+  {
+   "name": "서원",
+   "idx": null,
+   "lat": 37.478211,
+   "lon": 126.933012,
+   "line4": false
+  },
+  {
+   "name": "도봉산",
+   "idx": null,
+   "lat": 37.689836,
+   "lon": 127.046078,
+   "line4": false
+  },
+  {
+   "name": "영등포",
+   "idx": null,
+   "lat": 37.515363,
+   "lon": 126.906935,
+   "line4": false
+  },
+  {
+   "name": "노량진",
+   "idx": null,
+   "lat": 37.514238,
+   "lon": 126.94204,
+   "line4": false
+  },
+  {
+   "name": "용산",
+   "idx": null,
+   "lat": 37.529953,
+   "lon": 126.964827,
+   "line4": false
+  },
+  {
+   "name": "종각",
+   "idx": null,
+   "lat": 37.570175,
+   "lon": 126.983183,
+   "line4": false
+  },
+  {
+   "name": "건대입구",
+   "idx": null,
+   "lat": 37.540444,
+   "lon": 127.070864,
+   "line4": false
+  },
+  {
+   "name": "영통",
+   "idx": null,
+   "lat": 37.251347,
+   "lon": 127.071279,
+   "line4": false
+  },
+  {
+   "name": "청명",
+   "idx": null,
+   "lat": 37.259956,
+   "lon": 127.079506,
+   "line4": false
+  },
+  {
+   "name": "상갈",
+   "idx": null,
+   "lat": 37.261692,
+   "lon": 127.108895,
+   "line4": false
+  },
+  {
+   "name": "매탄권선",
+   "idx": null,
+   "lat": 37.253013,
+   "lon": 127.040383,
+   "line4": false
+  },
+  {
+   "name": "수원시청",
+   "idx": null,
+   "lat": 37.261647,
+   "lon": 127.031862,
+   "line4": false
+  },
+  {
+   "name": "매교",
+   "idx": null,
+   "lat": 37.265479,
+   "lon": 127.015687,
+   "line4": false
+  },
+  {
+   "name": "미금",
+   "idx": null,
+   "lat": 37.349978,
+   "lon": 127.108891,
+   "line4": false
+  },
+  {
+   "name": "정자",
+   "idx": null,
+   "lat": 37.366652,
+   "lon": 127.108437,
+   "line4": false
+  },
+  {
+   "name": "이매",
+   "idx": null,
+   "lat": 37.39464,
+   "lon": 127.1284,
+   "line4": false
+  },
+  {
+   "name": "갈매",
+   "idx": null,
+   "lat": 37.633946,
+   "lon": 127.114729,
+   "line4": false
+  },
+  {
+   "name": "별내",
+   "idx": null,
+   "lat": 37.642333,
+   "lon": 127.127609,
+   "line4": false
+  },
+  {
+   "name": "퇴계원",
+   "idx": null,
+   "lat": 37.648256,
+   "lon": 127.143532,
+   "line4": false
+  },
+  {
+   "name": "가좌",
+   "idx": null,
+   "lat": 37.568679,
+   "lon": 126.915063,
+   "line4": false
+  },
+  {
+   "name": "남영",
+   "idx": null,
+   "lat": 37.540538,
+   "lon": 126.971321,
+   "line4": false
+  },
+  {
+   "name": "대방",
+   "idx": null,
+   "lat": 37.513358,
+   "lon": 126.926478,
+   "line4": false
+  },
+  {
+   "name": "호구포",
+   "idx": null,
+   "lat": 37.40169,
+   "lon": 126.708639,
+   "line4": false
+  },
+  {
+   "name": "인천논현",
+   "idx": null,
+   "lat": 37.400687,
+   "lon": 126.722565,
+   "line4": false
+  },
+  {
+   "name": "소래포구",
+   "idx": null,
+   "lat": 37.400917,
+   "lon": 126.733525,
+   "line4": false
+  },
+  {
+   "name": "기흥",
+   "idx": null,
+   "lat": 37.275513,
+   "lon": 127.116013,
+   "line4": false
+  },
+  {
+   "name": "응암",
+   "idx": null,
+   "lat": 37.59843,
+   "lon": 126.915528,
+   "line4": false
+  },
+  {
+   "name": "합정",
+   "idx": null,
+   "lat": 37.549356,
+   "lon": 126.913656,
+   "line4": false
+  },
+  {
+   "name": "동묘앞",
+   "idx": null,
+   "lat": 37.573508,
+   "lon": 127.017434,
+   "line4": false
+  },
+  {
+   "name": "고려대",
+   "idx": null,
+   "lat": 37.590378,
+   "lon": 127.036013,
+   "line4": false
+  },
+  {
+   "name": "홍대입구",
+   "idx": null,
+   "lat": 37.557349,
+   "lon": 126.926908,
+   "line4": false
+  },
+  {
+   "name": "디지털미디어시티",
+   "idx": null,
+   "lat": 37.577673,
+   "lon": 126.900077,
+   "line4": false
+  },
+  {
+   "name": "원시",
+   "idx": null,
+   "lat": 37.302557,
+   "lon": 126.786785,
+   "line4": false
+  },
+  {
+   "name": "시우",
+   "idx": null,
+   "lat": 37.313114,
+   "lon": 126.795638,
+   "line4": false
+  },
+  {
+   "name": "선부",
+   "idx": null,
+   "lat": 37.334457,
+   "lon": 126.809899,
+   "line4": false
+  },
+  {
+   "name": "달미",
+   "idx": null,
+   "lat": 37.349104,
+   "lon": 126.80907,
+   "line4": false
+  },
+  {
+   "name": "시흥능곡",
+   "idx": null,
+   "lat": 37.370085,
+   "lon": 126.808751,
+   "line4": false
+  },
+  {
+   "name": "시흥시청",
+   "idx": null,
+   "lat": 37.382078,
+   "lon": 126.805746,
+   "line4": false
+  },
+  {
+   "name": "신현",
+   "idx": null,
+   "lat": 37.409584,
+   "lon": 126.78787,
+   "line4": false
+  },
+  {
+   "name": "신천",
+   "idx": null,
+   "lat": 37.43931,
+   "lon": 126.7868,
+   "line4": false
+  },
+  {
+   "name": "시흥대야",
+   "idx": null,
+   "lat": 37.450345,
+   "lon": 126.793122,
+   "line4": false
+  },
+  {
+   "name": "소새울",
+   "idx": null,
+   "lat": 37.468874,
+   "lon": 126.797099,
+   "line4": false
+  },
+  {
+   "name": "선릉",
+   "idx": null,
+   "lat": 37.504475,
+   "lon": 127.048951,
+   "line4": false
+  },
+  {
+   "name": "죽전",
+   "idx": null,
+   "lat": 37.324567,
+   "lon": 127.107407,
+   "line4": false
+  },
+  {
+   "name": "강남구청",
+   "idx": null,
+   "lat": 37.517176,
+   "lon": 127.041286,
+   "line4": false
+  },
+  {
+   "name": "모란",
+   "idx": null,
+   "lat": 37.433739,
+   "lon": 127.129155,
+   "line4": false
+  },
+  {
+   "name": "강남",
+   "idx": null,
+   "lat": 37.49795,
+   "lon": 127.027557,
+   "line4": false
+  },
+  {
+   "name": "판교",
+   "idx": null,
+   "lat": 37.39473,
+   "lon": 127.111189,
+   "line4": false
+  },
+  {
+   "name": "가락시장",
+   "idx": null,
+   "lat": 37.492532,
+   "lon": 127.118638,
+   "line4": false
+  },
+  {
+   "name": "을지로3가",
+   "idx": null,
+   "lat": 37.566336,
+   "lon": 126.992531,
+   "line4": false
+  },
+  {
+   "name": "불광",
+   "idx": null,
+   "lat": 37.610881,
+   "lon": 126.929631,
+   "line4": false
+  },
+  {
+   "name": "구의",
+   "idx": null,
+   "lat": 37.537168,
+   "lon": 127.086221,
+   "line4": false
+  },
+  {
+   "name": "강변",
+   "idx": null,
+   "lat": 37.535111,
+   "lon": 127.094741,
+   "line4": false
+  },
+  {
+   "name": "잠실나루",
+   "idx": null,
+   "lat": 37.520691,
+   "lon": 127.10383,
+   "line4": false
+  },
+  {
+   "name": "옥수",
+   "idx": null,
+   "lat": 37.540264,
+   "lon": 127.018359,
+   "line4": false
+  },
+  {
+   "name": "약수",
+   "idx": null,
+   "lat": 37.554919,
+   "lon": 127.010387,
+   "line4": false
+  },
+  {
+   "name": "교대",
+   "idx": null,
+   "lat": 37.493659,
+   "lon": 127.013702,
+   "line4": false
+  },
+  {
+   "name": "오금",
+   "idx": null,
+   "lat": 37.501981,
+   "lon": 127.128152,
+   "line4": false
+  },
+  {
+   "name": "한양대",
+   "idx": null,
+   "lat": 37.555727,
+   "lon": 127.043664,
+   "line4": false
+  },
+  {
+   "name": "성수",
+   "idx": null,
+   "lat": 37.544569,
+   "lon": 127.056102,
+   "line4": false
+  },
+  {
+   "name": "시청",
+   "idx": null,
+   "lat": 37.56548,
+   "lon": 126.977114,
+   "line4": false
+  },
+  {
+   "name": "을지로입구",
+   "idx": null,
+   "lat": 37.565949,
+   "lon": 126.982617,
+   "line4": false
+  },
+  {
+   "name": "을지로4가",
+   "idx": null,
+   "lat": 37.566643,
+   "lon": 126.998169,
+   "line4": false
+  },
+  {
+   "name": "신당",
+   "idx": null,
+   "lat": 37.565384,
+   "lon": 127.016252,
+   "line4": false
+  },
+  {
+   "name": "상왕십리",
+   "idx": null,
+   "lat": 37.564391,
+   "lon": 127.029251,
+   "line4": false
+  },
+  {
+   "name": "이대",
+   "idx": null,
+   "lat": 37.556773,
+   "lon": 126.945835,
+   "line4": false
+  },
+  {
+   "name": "아현",
+   "idx": null,
+   "lat": 37.557431,
+   "lon": 126.956121,
+   "line4": false
+  },
+  {
+   "name": "지축",
+   "idx": null,
+   "lat": 37.648118,
+   "lon": 126.91393,
+   "line4": false
+  },
+  {
+   "name": "원흥",
+   "idx": null,
+   "lat": 37.650512,
+   "lon": 126.873668,
+   "line4": false
+  },
+  {
+   "name": "원당",
+   "idx": null,
+   "lat": 37.65305,
+   "lon": 126.842898,
+   "line4": false
+  },
+  {
+   "name": "화정",
+   "idx": null,
+   "lat": 37.634646,
+   "lon": 126.832577,
+   "line4": false
+  },
+  {
+   "name": "대곡",
+   "idx": null,
+   "lat": 37.631781,
+   "lon": 126.810284,
+   "line4": false
+  },
+  {
+   "name": "마두",
+   "idx": null,
+   "lat": 37.652004,
+   "lon": 126.77776,
+   "line4": false
+  },
+  {
+   "name": "정발산",
+   "idx": null,
+   "lat": 37.659711,
+   "lon": 126.773265,
+   "line4": false
+  },
+  {
+   "name": "대화",
+   "idx": null,
+   "lat": 37.676175,
+   "lon": 126.747463,
+   "line4": false
+  },
+  {
+   "name": "삼송",
+   "idx": null,
+   "lat": 37.653119,
+   "lon": 126.89548,
+   "line4": false
+  },
+  {
+   "name": "마곡나루",
+   "idx": null,
+   "lat": 37.566218,
+   "lon": 126.827917,
+   "line4": false
+  },
+  {
+   "name": "당산",
+   "idx": null,
+   "lat": 37.534596,
+   "lon": 126.902478,
+   "line4": false
+  },
+  {
+   "name": "문래",
+   "idx": null,
+   "lat": 37.518384,
+   "lon": 126.894873,
+   "line4": false
+  },
+  {
+   "name": "신도림",
+   "idx": null,
+   "lat": 37.50894,
+   "lon": 126.891226,
+   "line4": false
+  },
+  {
+   "name": "구로디지털단지",
+   "idx": null,
+   "lat": 37.485276,
+   "lon": 126.901592,
+   "line4": false
+  },
+  {
+   "name": "신대방",
+   "idx": null,
+   "lat": 37.487595,
+   "lon": 126.913392,
+   "line4": false
+  },
+  {
+   "name": "신림",
+   "idx": null,
+   "lat": 37.484232,
+   "lon": 126.92968,
+   "line4": false
+  },
+  {
+   "name": "봉천",
+   "idx": null,
+   "lat": 37.482389,
+   "lon": 126.941939,
+   "line4": false
+  },
+  {
+   "name": "서울대입구",
+   "idx": null,
+   "lat": 37.481223,
+   "lon": 126.952715,
+   "line4": false
+  },
+  {
+   "name": "낙성대",
+   "idx": null,
+   "lat": 37.477062,
+   "lon": 126.963488,
+   "line4": false
+  },
+  {
+   "name": "방배",
+   "idx": null,
+   "lat": 37.481466,
+   "lon": 126.997707,
+   "line4": false
+  },
+  {
+   "name": "서초",
+   "idx": null,
+   "lat": 37.491775,
+   "lon": 127.007681,
+   "line4": false
+  },
+  {
+   "name": "삼",
+   "idx": null,
+   "lat": 37.500822,
+   "lon": 127.03696,
+   "line4": false
+  },
+  {
+   "name": "삼성",
+   "idx": null,
+   "lat": 37.50884,
+   "lon": 127.063143,
+   "line4": false
+  },
+  {
+   "name": "종합운동장",
+   "idx": null,
+   "lat": 37.511058,
+   "lon": 127.07372,
+   "line4": false
+  },
+  {
+   "name": "잠실새내",
+   "idx": null,
+   "lat": 37.511588,
+   "lon": 127.085571,
+   "line4": false
+  },
+  {
+   "name": "잠실",
+   "idx": null,
+   "lat": 37.513217,
+   "lon": 127.100137,
+   "line4": false
+  },
+  {
+   "name": "양천구청",
+   "idx": null,
+   "lat": 37.512295,
+   "lon": 126.865945,
+   "line4": false
+  },
+  {
+   "name": "신정네거리",
+   "idx": null,
+   "lat": 37.519983,
+   "lon": 126.853046,
+   "line4": false
+  },
+  {
+   "name": "도림천",
+   "idx": null,
+   "lat": 37.514454,
+   "lon": 126.882684,
+   "line4": false
+  },
+  {
+   "name": "경찰병원",
+   "idx": null,
+   "lat": 37.495401,
+   "lon": 127.123904,
+   "line4": false
+  },
+  {
+   "name": "대청",
+   "idx": null,
+   "lat": 37.493628,
+   "lon": 127.079551,
+   "line4": false
+  },
+  {
+   "name": "학여울",
+   "idx": null,
+   "lat": 37.496497,
+   "lon": 127.069884,
+   "line4": false
+  },
+  {
+   "name": "대치",
+   "idx": null,
+   "lat": 37.494474,
+   "lon": 127.063193,
+   "line4": false
+  },
+  {
+   "name": "매봉",
+   "idx": null,
+   "lat": 37.487069,
+   "lon": 127.046978,
+   "line4": false
+  },
+  {
+   "name": "남부터미널",
+   "idx": null,
+   "lat": 37.484943,
+   "lon": 127.016345,
+   "line4": false
+  },
+  {
+   "name": "잠원",
+   "idx": null,
+   "lat": 37.512751,
+   "lon": 127.01115,
+   "line4": false
+  },
+  {
+   "name": "신사",
+   "idx": null,
+   "lat": 37.516109,
+   "lon": 127.019516,
+   "line4": false
+  },
+  {
+   "name": "압구정",
+   "idx": null,
+   "lat": 37.526185,
+   "lon": 127.028499,
+   "line4": false
+  },
+  {
+   "name": "동대입구",
+   "idx": null,
+   "lat": 37.559061,
+   "lon": 127.005727,
+   "line4": false
+  },
+  {
+   "name": "경복궁",
+   "idx": null,
+   "lat": 37.575787,
+   "lon": 126.973526,
+   "line4": false
+  },
+  {
+   "name": "독립문",
+   "idx": null,
+   "lat": 37.574558,
+   "lon": 126.957836,
+   "line4": false
+  },
+  {
+   "name": "무악재",
+   "idx": null,
+   "lat": 37.582317,
+   "lon": 126.95035,
+   "line4": false
+  },
+  {
+   "name": "홍제",
+   "idx": null,
+   "lat": 37.588689,
+   "lon": 126.944253,
+   "line4": false
+  },
+  {
+   "name": "녹번",
+   "idx": null,
+   "lat": 37.600973,
+   "lon": 126.935731,
+   "line4": false
+  },
+  {
+   "name": "구파발",
+   "idx": null,
+   "lat": 37.636892,
+   "lon": 126.918805,
+   "line4": false
+  },
+  {
+   "name": "불암산",
+   "idx": null,
+   "lat": 37.670098,
+   "lon": 127.078924,
+   "line4": false
+  },
+  {
+   "name": "마천",
+   "idx": null,
+   "lat": 37.494953,
+   "lon": 127.152724,
+   "line4": false
+  },
+  {
+   "name": "거여",
+   "idx": null,
+   "lat": 37.493345,
+   "lon": 127.143771,
+   "line4": false
+  },
+  {
+   "name": "개롱",
+   "idx": null,
+   "lat": 37.498075,
+   "lon": 127.134843,
+   "line4": false
+  },
+  {
+   "name": "방이",
+   "idx": null,
+   "lat": 37.508643,
+   "lon": 127.126039,
+   "line4": false
+  },
+  {
+   "name": "올림픽공원",
+   "idx": null,
+   "lat": 37.516148,
+   "lon": 127.13093,
+   "line4": false
+  },
+  {
+   "name": "둔촌동",
+   "idx": null,
+   "lat": 37.527802,
+   "lon": 127.136243,
+   "line4": false
+  },
+  {
+   "name": "상일동",
+   "idx": null,
+   "lat": 37.556776,
+   "lon": 127.166779,
+   "line4": false
+  },
+  {
+   "name": "고덕",
+   "idx": null,
+   "lat": 37.554977,
+   "lon": 127.153775,
+   "line4": false
+  },
+  {
+   "name": "명일",
+   "idx": null,
+   "lat": 37.551953,
+   "lon": 127.144085,
+   "line4": false
+  },
+  {
+   "name": "굽은다리",
+   "idx": null,
+   "lat": 37.545637,
+   "lon": 127.142962,
+   "line4": false
+  },
+  {
+   "name": "길동",
+   "idx": null,
+   "lat": 37.538368,
+   "lon": 127.140205,
+   "line4": false
+  },
+  {
+   "name": "강동",
+   "idx": null,
+   "lat": 37.535797,
+   "lon": 127.132595,
+   "line4": false
+  },
+  {
+   "name": "광나루",
+   "idx": null,
+   "lat": 37.545301,
+   "lon": 127.103527,
+   "line4": false
+  },
+  {
+   "name": "아차산",
+   "idx": null,
+   "lat": 37.551698,
+   "lon": 127.089795,
+   "line4": false
+  },
+  {
+   "name": "장한평",
+   "idx": null,
+   "lat": 37.561491,
+   "lon": 127.064567,
+   "line4": false
+  },
+  {
+   "name": "답십리",
+   "idx": null,
+   "lat": 37.566814,
+   "lon": 127.052699,
+   "line4": false
+  },
+  {
+   "name": "마장",
+   "idx": null,
+   "lat": 37.566098,
+   "lon": 127.042881,
+   "line4": false
+  },
+  {
+   "name": "행당",
+   "idx": null,
+   "lat": 37.557606,
+   "lon": 127.029993,
+   "line4": false
+  },
+  {
+   "name": "신금호",
+   "idx": null,
+   "lat": 37.554429,
+   "lon": 127.020248,
+   "line4": false
+  },
+  {
+   "name": "광화문",
+   "idx": null,
+   "lat": 37.571616,
+   "lon": 126.976903,
+   "line4": false
+  },
+  {
+   "name": "서대문",
+   "idx": null,
+   "lat": 37.565795,
+   "lon": 126.966635,
+   "line4": false
+  },
+  {
+   "name": "애오개",
+   "idx": null,
+   "lat": 37.553428,
+   "lon": 126.956698,
+   "line4": false
+  },
+  {
+   "name": "공덕",
+   "idx": null,
+   "lat": 37.543654,
+   "lon": 126.950806,
+   "line4": false
+  },
+  {
+   "name": "마포",
+   "idx": null,
+   "lat": 37.539637,
+   "lon": 126.945993,
+   "line4": false
+  },
+  {
+   "name": "여의나루",
+   "idx": null,
+   "lat": 37.526853,
+   "lon": 126.932529,
+   "line4": false
+  },
+  {
+   "name": "여의도",
+   "idx": null,
+   "lat": 37.521668,
+   "lon": 126.924302,
+   "line4": false
+  },
+  {
+   "name": "신길",
+   "idx": null,
+   "lat": 37.516649,
+   "lon": 126.918744,
+   "line4": false
+  },
+  {
+   "name": "영등포시장",
+   "idx": null,
+   "lat": 37.522693,
+   "lon": 126.905141,
+   "line4": false
+  },
+  {
+   "name": "영등포구청",
+   "idx": null,
+   "lat": 37.524018,
+   "lon": 126.896337,
+   "line4": false
+  },
+  {
+   "name": "양평",
+   "idx": null,
+   "lat": 37.525633,
+   "lon": 126.886118,
+   "line4": false
+  },
+  {
+   "name": "오목교",
+   "idx": null,
+   "lat": 37.524565,
+   "lon": 126.875122,
+   "line4": false
+  },
+  {
+   "name": "목동",
+   "idx": null,
+   "lat": 37.526124,
+   "lon": 126.864517,
+   "line4": false
+  },
+  {
+   "name": "신정",
+   "idx": null,
+   "lat": 37.525041,
+   "lon": 126.85597,
+   "line4": false
+  },
+  {
+   "name": "까치산",
+   "idx": null,
+   "lat": 37.532112,
+   "lon": 126.846526,
+   "line4": false
+  },
+  {
+   "name": "화곡",
+   "idx": null,
+   "lat": 37.541673,
+   "lon": 126.840397,
+   "line4": false
+  },
+  {
+   "name": "우장산",
+   "idx": null,
+   "lat": 37.548894,
+   "lon": 126.836323,
+   "line4": false
+  },
+  {
+   "name": "발산",
+   "idx": null,
+   "lat": 37.558495,
+   "lon": 126.837465,
+   "line4": false
+  },
+  {
+   "name": "마곡",
+   "idx": null,
+   "lat": 37.560249,
+   "lon": 126.824746,
+   "line4": false
+  },
+  {
+   "name": "송정",
+   "idx": null,
+   "lat": 37.561277,
+   "lon": 126.811943,
+   "line4": false
+  },
+  {
+   "name": "개화산",
+   "idx": null,
+   "lat": 37.572876,
+   "lon": 126.80826,
+   "line4": false
+  },
+  {
+   "name": "방화",
+   "idx": null,
+   "lat": 37.577404,
+   "lon": 126.812732,
+   "line4": false
+  },
+  {
+   "name": "봉화산",
+   "idx": null,
+   "lat": 37.617416,
+   "lon": 127.091097,
+   "line4": false
+  },
+  {
+   "name": "화랑대",
+   "idx": null,
+   "lat": 37.619784,
+   "lon": 127.083712,
+   "line4": false
+  },
+  {
+   "name": "석계",
+   "idx": null,
+   "lat": 37.614808,
+   "lon": 127.065839,
+   "line4": false
+  },
+  {
+   "name": "돌곶이",
+   "idx": null,
+   "lat": 37.610566,
+   "lon": 127.056493,
+   "line4": false
+  },
+  {
+   "name": "상월곡",
+   "idx": null,
+   "lat": 37.606238,
+   "lon": 127.048272,
+   "line4": false
+  },
+  {
+   "name": "월곡",
+   "idx": null,
+   "lat": 37.60192,
+   "lon": 127.041455,
+   "line4": false
+  },
+  {
+   "name": "안암",
+   "idx": null,
+   "lat": 37.586269,
+   "lon": 127.029278,
+   "line4": false
+  },
+  {
+   "name": "창신",
+   "idx": null,
+   "lat": 37.579804,
+   "lon": 127.015247,
+   "line4": false
+  },
+  {
+   "name": "청구",
+   "idx": null,
+   "lat": 37.560231,
+   "lon": 127.013778,
+   "line4": false
+  },
+  {
+   "name": "버티고개",
+   "idx": null,
+   "lat": 37.548232,
+   "lon": 127.006588,
+   "line4": false
+  },
+  {
+   "name": "한강진",
+   "idx": null,
+   "lat": 37.539796,
+   "lon": 127.001751,
+   "line4": false
+  },
+  {
+   "name": "이태원",
+   "idx": null,
+   "lat": 37.534503,
+   "lon": 126.994371,
+   "line4": false
+  },
+  {
+   "name": "녹사평",
+   "idx": null,
+   "lat": 37.53492,
+   "lon": 126.986577,
+   "line4": false
+  },
+  {
+   "name": "효창공원앞",
+   "idx": null,
+   "lat": 37.539341,
+   "lon": 126.961332,
+   "line4": false
+  },
+  {
+   "name": "대흥",
+   "idx": null,
+   "lat": 37.547699,
+   "lon": 126.942345,
+   "line4": false
+  },
+  {
+   "name": "광흥창",
+   "idx": null,
+   "lat": 37.547472,
+   "lon": 126.931961,
+   "line4": false
+  },
+  {
+   "name": "상수",
+   "idx": null,
+   "lat": 37.547758,
+   "lon": 126.922892,
+   "line4": false
+  },
+  {
+   "name": "망원",
+   "idx": null,
+   "lat": 37.556025,
+   "lon": 126.910128,
+   "line4": false
+  },
+  {
+   "name": "마포구청",
+   "idx": null,
+   "lat": 37.563559,
+   "lon": 126.903364,
+   "line4": false
+  },
+  {
+   "name": "월드컵경기장",
+   "idx": null,
+   "lat": 37.570192,
+   "lon": 126.899318,
+   "line4": false
+  },
+  {
+   "name": "증산",
+   "idx": null,
+   "lat": 37.584144,
+   "lon": 126.909912,
+   "line4": false
+  },
+  {
+   "name": "새절",
+   "idx": null,
+   "lat": 37.591649,
+   "lon": 126.913792,
+   "line4": false
+  },
+  {
+   "name": "구산",
+   "idx": null,
+   "lat": 37.61125,
+   "lon": 126.917219,
+   "line4": false
+  },
+  {
+   "name": "연신내",
+   "idx": null,
+   "lat": 37.618925,
+   "lon": 126.921184,
+   "line4": false
+  },
+  {
+   "name": "독바위",
+   "idx": null,
+   "lat": 37.618337,
+   "lon": 126.933021,
+   "line4": false
+  },
+  {
+   "name": "촌",
+   "idx": null,
+   "lat": 37.606073,
+   "lon": 126.922756,
+   "line4": false
+  },
+  {
+   "name": "장암",
+   "idx": null,
+   "lat": 37.699974,
+   "lon": 127.052908,
+   "line4": false
+  },
+  {
+   "name": "어린이대공원",
+   "idx": null,
+   "lat": 37.5476,
+   "lon": 127.074392,
+   "line4": false
+  },
+  {
+   "name": "군자",
+   "idx": null,
+   "lat": 37.557245,
+   "lon": 127.079558,
+   "line4": false
+  },
+  {
+   "name": "중곡",
+   "idx": null,
+   "lat": 37.566305,
+   "lon": 127.084515,
+   "line4": false
+  },
+  {
+   "name": "용마산",
+   "idx": null,
+   "lat": 37.573993,
+   "lon": 127.08658,
+   "line4": false
+  },
+  {
+   "name": "사가정",
+   "idx": null,
+   "lat": 37.580697,
+   "lon": 127.088411,
+   "line4": false
+  },
+  {
+   "name": "면목",
+   "idx": null,
+   "lat": 37.5884,
+   "lon": 127.087604,
+   "line4": false
+  },
+  {
+   "name": "상봉",
+   "idx": null,
+   "lat": 37.596083,
+   "lon": 127.085592,
+   "line4": false
+  },
+  {
+   "name": "중화",
+   "idx": null,
+   "lat": 37.601627,
+   "lon": 127.079517,
+   "line4": false
+  },
+  {
+   "name": "먹골",
+   "idx": null,
+   "lat": 37.611442,
+   "lon": 127.077652,
+   "line4": false
+  },
+  {
+   "name": "태릉입구",
+   "idx": null,
+   "lat": 37.617692,
+   "lon": 127.075672,
+   "line4": false
+  },
+  {
+   "name": "공릉",
+   "idx": null,
+   "lat": 37.625636,
+   "lon": 127.073044,
+   "line4": false
+  },
+  {
+   "name": "하계",
+   "idx": null,
+   "lat": 37.636018,
+   "lon": 127.068252,
+   "line4": false
+  },
+  {
+   "name": "중계",
+   "idx": null,
+   "lat": 37.645537,
+   "lon": 127.063873,
+   "line4": false
+  },
+  {
+   "name": "마들",
+   "idx": null,
+   "lat": 37.665038,
+   "lon": 127.057721,
+   "line4": false
+  },
+  {
+   "name": "수락산",
+   "idx": null,
+   "lat": 37.677804,
+   "lon": 127.055343,
+   "line4": false
+  },
+  {
+   "name": "광명사거리",
+   "idx": null,
+   "lat": 37.479421,
+   "lon": 126.85446,
+   "line4": false
+  },
+  {
+   "name": "철산",
+   "idx": null,
+   "lat": 37.476001,
+   "lon": 126.867597,
+   "line4": false
+  },
+  {
+   "name": "가산디지털단지",
+   "idx": null,
+   "lat": 37.481595,
+   "lon": 126.882617,
+   "line4": false
+  },
+  {
+   "name": "남구로",
+   "idx": null,
+   "lat": 37.485361,
+   "lon": 126.886665,
+   "line4": false
+  },
+  {
+   "name": "대림",
+   "idx": null,
+   "lat": 37.493437,
+   "lon": 126.894932,
+   "line4": false
+  },
+  {
+   "name": "신풍",
+   "idx": null,
+   "lat": 37.500167,
+   "lon": 126.908875,
+   "line4": false
+  },
+  {
+   "name": "보라매",
+   "idx": null,
+   "lat": 37.499928,
+   "lon": 126.920376,
+   "line4": false
+  },
+  {
+   "name": "신대방삼거리",
+   "idx": null,
+   "lat": 37.499706,
+   "lon": 126.928225,
+   "line4": false
+  },
+  {
+   "name": "장승배기",
+   "idx": null,
+   "lat": 37.505017,
+   "lon": 126.939279,
+   "line4": false
+  },
+  {
+   "name": "상도",
+   "idx": null,
+   "lat": 37.503216,
+   "lon": 126.947673,
+   "line4": false
+  },
+  {
+   "name": "숭실대입구",
+   "idx": null,
+   "lat": 37.495686,
+   "lon": 126.954133,
+   "line4": false
+  },
+  {
+   "name": "남성",
+   "idx": null,
+   "lat": 37.484355,
+   "lon": 126.971894,
+   "line4": false
+  },
+  {
+   "name": "이수",
+   "idx": null,
+   "lat": 37.485449,
+   "lon": 126.98211,
+   "line4": false
+  },
+  {
+   "name": "내방",
+   "idx": null,
+   "lat": 37.487645,
+   "lon": 126.993554,
+   "line4": false
+  },
+  {
+   "name": "반포",
+   "idx": null,
+   "lat": 37.508175,
+   "lon": 127.011635,
+   "line4": false
+  },
+  {
+   "name": "논현",
+   "idx": null,
+   "lat": 37.510979,
+   "lon": 127.021364,
+   "line4": false
+  },
+  {
+   "name": "학동",
+   "idx": null,
+   "lat": 37.513957,
+   "lon": 127.03075,
+   "line4": false
+  },
+  {
+   "name": "청담",
+   "idx": null,
+   "lat": 37.519091,
+   "lon": 127.051678,
+   "line4": false
+  },
+  {
+   "name": "자양",
+   "idx": null,
+   "lat": 37.531532,
+   "lon": 127.066742,
+   "line4": false
+  },
+  {
+   "name": "용두",
+   "idx": null,
+   "lat": 37.574074,
+   "lon": 127.038066,
+   "line4": false
+  },
+  {
+   "name": "신답",
+   "idx": null,
+   "lat": 37.569719,
+   "lon": 127.047127,
+   "line4": false
+  },
+  {
+   "name": "굴포천",
+   "idx": null,
+   "lat": 37.507023,
+   "lon": 126.731337,
+   "line4": false
+  },
+  {
+   "name": "삼산체육관",
+   "idx": null,
+   "lat": 37.506496,
+   "lon": 126.742347,
+   "line4": false
+  },
+  {
+   "name": "신중동",
+   "idx": null,
+   "lat": 37.503039,
+   "lon": 126.776233,
+   "line4": false
+  },
+  {
+   "name": "춘의",
+   "idx": null,
+   "lat": 37.503731,
+   "lon": 126.787201,
+   "line4": false
+  },
+  {
+   "name": "부천종합운동장",
+   "idx": null,
+   "lat": 37.505457,
+   "lon": 126.797288,
+   "line4": false
+  },
+  {
+   "name": "까치울",
+   "idx": null,
+   "lat": 37.506241,
+   "lon": 126.811384,
+   "line4": false
+  },
+  {
+   "name": "천왕",
+   "idx": null,
+   "lat": 37.486367,
+   "lon": 126.838922,
+   "line4": false
+  },
+  {
+   "name": "수진",
+   "idx": null,
+   "lat": 37.437443,
+   "lon": 127.140686,
+   "line4": false
+  },
+  {
+   "name": "신흥",
+   "idx": null,
+   "lat": 37.441003,
+   "lon": 127.147664,
+   "line4": false
+  },
+  {
+   "name": "단대오거리",
+   "idx": null,
+   "lat": 37.445085,
+   "lon": 127.156778,
+   "line4": false
+  },
+  {
+   "name": "남한산성입구",
+   "idx": null,
+   "lat": 37.451553,
+   "lon": 127.159813,
+   "line4": false
+  },
+  {
+   "name": "산성",
+   "idx": null,
+   "lat": 37.456868,
+   "lon": 127.149933,
+   "line4": false
+  },
+  {
+   "name": "남위례",
+   "idx": null,
+   "lat": 37.462772,
+   "lon": 127.139216,
+   "line4": false
+  },
+  {
+   "name": "장지",
+   "idx": null,
+   "lat": 37.478888,
+   "lon": 127.126067,
+   "line4": false
+  },
+  {
+   "name": "문정",
+   "idx": null,
+   "lat": 37.485836,
+   "lon": 127.122518,
+   "line4": false
+  },
+  {
+   "name": "송파",
+   "idx": null,
+   "lat": 37.499725,
+   "lon": 127.112182,
+   "line4": false
+  },
+  {
+   "name": "석촌",
+   "idx": null,
+   "lat": 37.505295,
+   "lon": 127.107111,
+   "line4": false
+  },
+  {
+   "name": "몽촌토성",
+   "idx": null,
+   "lat": 37.517533,
+   "lon": 127.11267,
+   "line4": false
+  },
+  {
+   "name": "강동구청",
+   "idx": null,
+   "lat": 37.530694,
+   "lon": 127.120623,
+   "line4": false
+  },
+  {
+   "name": "암사",
+   "idx": null,
+   "lat": 37.550106,
+   "lon": 127.127538,
+   "line4": false
+  },
+  {
+   "name": "중앙보훈병원",
+   "idx": null,
+   "lat": 37.52828,
+   "lon": 127.148258,
+   "line4": false
+  },
+  {
+   "name": "둔촌오륜",
+   "idx": null,
+   "lat": 37.519841,
+   "lon": 127.138418,
+   "line4": false
+  },
+  {
+   "name": "한성백제",
+   "idx": null,
+   "lat": 37.51667,
+   "lon": 127.116213,
+   "line4": false
+  },
+  {
+   "name": "송파나루",
+   "idx": null,
+   "lat": 37.511245,
+   "lon": 127.112795,
+   "line4": false
+  },
+  {
+   "name": "석촌고분",
+   "idx": null,
+   "lat": 37.502444,
+   "lon": 127.096614,
+   "line4": false
+  },
+  {
+   "name": "삼전",
+   "idx": null,
+   "lat": 37.504535,
+   "lon": 127.087208,
+   "line4": false
+  },
+  {
+   "name": "부평구청",
+   "idx": null,
+   "lat": 37.507465,
+   "lon": 126.721104,
+   "line4": false
+  },
+  {
+   "name": "백석",
+   "idx": null,
+   "lat": 37.643036,
+   "lon": 126.788038,
+   "line4": false
+  },
+  {
+   "name": "산곡",
+   "idx": null,
+   "lat": 37.508697,
+   "lon": 126.703693,
+   "line4": false
+  },
+  {
+   "name": "광교중앙",
+   "idx": null,
+   "lat": 37.288562,
+   "lon": 127.051519,
+   "line4": false
+  },
+  {
+   "name": "상현",
+   "idx": null,
+   "lat": 37.297583,
+   "lon": 127.069302,
+   "line4": false
+  },
+  {
+   "name": "성복",
+   "idx": null,
+   "lat": 37.3135,
+   "lon": 127.080377,
+   "line4": false
+  },
+  {
+   "name": "수지구청",
+   "idx": null,
+   "lat": 37.322537,
+   "lon": 127.094755,
+   "line4": false
+  },
+  {
+   "name": "곡",
+   "idx": null,
+   "lat": 37.485219,
+   "lon": 126.811811,
+   "line4": false
+  },
+  {
+   "name": "광교",
+   "idx": null,
+   "lat": 37.302109,
+   "lon": 127.044281,
+   "line4": false
+  },
+  {
+   "name": "동천",
+   "idx": null,
+   "lat": 37.338098,
+   "lon": 127.102828,
+   "line4": false
+  },
+  {
+   "name": "오리",
+   "idx": null,
+   "lat": 37.33994,
+   "lon": 127.10891,
+   "line4": false
+  },
+  {
+   "name": "수내",
+   "idx": null,
+   "lat": 37.378406,
+   "lon": 127.114245,
+   "line4": false
+  },
+  {
+   "name": "서현",
+   "idx": null,
+   "lat": 37.38491,
+   "lon": 127.123333,
+   "line4": false
+  },
+  {
+   "name": "야탑",
+   "idx": null,
+   "lat": 37.411298,
+   "lon": 127.128714,
+   "line4": false
+  },
+  {
+   "name": "태평",
+   "idx": null,
+   "lat": 37.439709,
+   "lon": 127.127745,
+   "line4": false
+  },
+  {
+   "name": "가천대",
+   "idx": null,
+   "lat": 37.448699,
+   "lon": 127.126725,
+   "line4": false
+  },
+  {
+   "name": "대모산입구",
+   "idx": null,
+   "lat": 37.491389,
+   "lon": 127.072749,
+   "line4": false
+  },
+  {
+   "name": "개포동",
+   "idx": null,
+   "lat": 37.489101,
+   "lon": 127.066043,
+   "line4": false
+  },
+  {
+   "name": "구룡",
+   "idx": null,
+   "lat": 37.486927,
+   "lon": 127.059461,
+   "line4": false
+  },
+  {
+   "name": "한티",
+   "idx": null,
+   "lat": 37.496271,
+   "lon": 127.052866,
+   "line4": false
+  },
+  {
+   "name": "압구정로데오",
+   "idx": null,
+   "lat": 37.527813,
+   "lon": 127.040709,
+   "line4": false
+  },
+  {
+   "name": "서울숲",
+   "idx": null,
+   "lat": 37.543592,
+   "lon": 127.04474,
+   "line4": false
+  },
+  {
+   "name": "보정",
+   "idx": null,
+   "lat": 37.312596,
+   "lon": 127.108344,
+   "line4": false
+  },
+  {
+   "name": "양재시민의숲",
+   "idx": null,
+   "lat": 37.46971,
+   "lon": 127.038477,
+   "line4": false
+  },
+  {
+   "name": "청계산입구",
+   "idx": null,
+   "lat": 37.448311,
+   "lon": 127.054643,
+   "line4": false
+  },
+  {
+   "name": "기흥시외버스정류소",
+   "idx": null,
+   "lat": 37.274903,
+   "lon": 127.1162,
+   "line4": false
+  },
+  {
+   "name": "종로3가",
+   "idx": null,
+   "lat": 37.57044,
+   "lon": 126.992324,
+   "line4": false
+  },
+  {
+   "name": "오남",
+   "idx": null,
+   "lat": 37.705234,
+   "lon": 127.191166,
+   "line4": false
+  },
+  {
+   "name": "별내별가람",
+   "idx": null,
+   "lat": 37.667824,
+   "lon": 127.116269,
+   "line4": false
+  },
+  {
+   "name": "장흥",
+   "idx": null,
+   "lat": 37.718686,
+   "lon": 126.94161,
+   "line4": false
+  },
+  {
+   "name": "원릉",
+   "idx": null,
+   "lat": 37.66264,
+   "lon": 126.839956,
+   "line4": false
+  },
+  {
+   "name": "미사",
+   "idx": null,
+   "lat": 37.563055,
+   "lon": 127.192822,
+   "line4": false
+  },
+  {
+   "name": "오봉",
+   "idx": null,
+   "lat": 37.336318,
+   "lon": 126.961744,
+   "line4": false
+  },
+  {
+   "name": "과천정보타운",
+   "idx": null,
+   "lat": 37.413541,
+   "lon": 126.979822,
+   "line4": false
+  },
+  {
+   "name": "개화",
+   "idx": null,
+   "lat": 37.578538,
+   "lon": 126.797665,
+   "line4": false
+  },
+  {
+   "name": "주엽",
+   "idx": null,
+   "lat": 37.670152,
+   "lon": 126.761238,
+   "line4": false
+  },
+  {
+   "name": "예술회관",
+   "idx": null,
+   "lat": 37.449506,
+   "lon": 126.700976,
+   "line4": false
+  },
+  {
+   "name": "간석오거리",
+   "idx": null,
+   "lat": 37.467155,
+   "lon": 126.707949,
+   "line4": false
+  },
+  {
+   "name": "부평삼거리",
+   "idx": null,
+   "lat": 37.477909,
+   "lon": 126.710357,
+   "line4": false
+  },
+  {
+   "name": "동수",
+   "idx": null,
+   "lat": 37.485422,
+   "lon": 126.718542,
+   "line4": false
+  },
+  {
+   "name": "부평시장",
+   "idx": null,
+   "lat": 37.498368,
+   "lon": 126.722289,
+   "line4": false
+  },
+  {
+   "name": "갈산",
+   "idx": null,
+   "lat": 37.516813,
+   "lon": 126.721518,
+   "line4": false
+  },
+  {
+   "name": "작전",
+   "idx": null,
+   "lat": 37.530313,
+   "lon": 126.722531,
+   "line4": false
+  },
+  {
+   "name": "경인교대입구",
+   "idx": null,
+   "lat": 37.538408,
+   "lon": 126.722603,
+   "line4": false
+  },
+  {
+   "name": "계산",
+   "idx": null,
+   "lat": 37.543336,
+   "lon": 126.727857,
+   "line4": false
+  },
+  {
+   "name": "관악산",
+   "idx": null,
+   "lat": 37.468736,
+   "lon": 126.945328,
+   "line4": false
+  },
+  {
+   "name": "서울대벤처타운",
+   "idx": null,
+   "lat": 37.472003,
+   "lon": 126.933706,
+   "line4": false
+  },
+  {
+   "name": "당곡",
+   "idx": null,
+   "lat": 37.489696,
+   "lon": 126.927801,
+   "line4": false
+  },
+  {
+   "name": "보라매병원",
+   "idx": null,
+   "lat": 37.492964,
+   "lon": 126.924273,
+   "line4": false
+  },
+  {
+   "name": "보라매공원",
+   "idx": null,
+   "lat": 37.495293,
+   "lon": 126.91819,
+   "line4": false
+  },
+  {
+   "name": "서울지방병무청",
+   "idx": null,
+   "lat": 37.505963,
+   "lon": 126.922724,
+   "line4": false
+  },
+  {
+   "name": "샛강",
+   "idx": null,
+   "lat": 37.517362,
+   "lon": 126.928282,
+   "line4": false
+  },
+  {
+   "name": "선유도",
+   "idx": null,
+   "lat": 37.537859,
+   "lon": 126.893982,
+   "line4": false
+  },
+  {
+   "name": "신목동",
+   "idx": null,
+   "lat": 37.544211,
+   "lon": 126.883176,
+   "line4": false
+  },
+  {
+   "name": "염창",
+   "idx": null,
+   "lat": 37.547033,
+   "lon": 126.875397,
+   "line4": false
+  },
+  {
+   "name": "등촌",
+   "idx": null,
+   "lat": 37.551152,
+   "lon": 126.864574,
+   "line4": false
+  },
+  {
+   "name": "증미",
+   "idx": null,
+   "lat": 37.55751,
+   "lon": 126.861818,
+   "line4": false
+  },
+  {
+   "name": "가양",
+   "idx": null,
+   "lat": 37.561142,
+   "lon": 126.8551,
+   "line4": false
+  },
+  {
+   "name": "양천향교",
+   "idx": null,
+   "lat": 37.568452,
+   "lon": 126.841296,
+   "line4": false
+  },
+  {
+   "name": "신방화",
+   "idx": null,
+   "lat": 37.567497,
+   "lon": 126.816592,
+   "line4": false
+  },
+  {
+   "name": "공항시장",
+   "idx": null,
+   "lat": 37.563658,
+   "lon": 126.810602,
+   "line4": false
+  },
+  {
+   "name": "원종",
+   "idx": null,
+   "lat": 37.523846,
+   "lon": 126.804861,
+   "line4": false
+  },
+  {
+   "name": "총신대입구(이수)",
+   "idx": null,
+   "lat": 37.48678,
+   "lon": 126.982237,
+   "line4": false
+  },
+  {
+   "name": "정릉",
+   "idx": null,
+   "lat": 37.602829,
+   "lon": 127.013355,
+   "line4": false
+  },
+  {
+   "name": "솔샘",
+   "idx": null,
+   "lat": 37.620166,
+   "lon": 127.013841,
+   "line4": false
+  },
+  {
+   "name": "삼양사거리",
+   "idx": null,
+   "lat": 37.621199,
+   "lon": 127.020492,
+   "line4": false
+  },
+  {
+   "name": "삼양",
+   "idx": null,
+   "lat": 37.626923,
+   "lon": 127.018176,
+   "line4": false
+  },
+  {
+   "name": "화계",
+   "idx": null,
+   "lat": 37.634027,
+   "lon": 127.017489,
+   "line4": false
+  },
+  {
+   "name": "가오리",
+   "idx": null,
+   "lat": 37.641974,
+   "lon": 127.016571,
+   "line4": false
+  },
+  {
+   "name": "4.19민주묘지",
+   "idx": null,
+   "lat": 37.649341,
+   "lon": 127.013686,
+   "line4": false
+  },
+  {
+   "name": "솔밭공원",
+   "idx": null,
+   "lat": 37.65607,
+   "lon": 127.013249,
+   "line4": false
+  },
+  {
+   "name": "북한산우이",
+   "idx": null,
+   "lat": 37.663324,
+   "lon": 127.012412,
+   "line4": false
+  },
+  {
+   "name": "강남대",
+   "idx": null,
+   "lat": 37.270159,
+   "lon": 127.126128,
+   "line4": false
+  },
+  {
+   "name": "지석",
+   "idx": null,
+   "lat": 37.269751,
+   "lon": 127.136633,
+   "line4": false
+  },
+  {
+   "name": "어정",
+   "idx": null,
+   "lat": 37.274932,
+   "lon": 127.143724,
+   "line4": false
+  },
+  {
+   "name": "동백",
+   "idx": null,
+   "lat": 37.269016,
+   "lon": 127.152769,
+   "line4": false
+  },
+  {
+   "name": "초당",
+   "idx": null,
+   "lat": 37.260799,
+   "lon": 127.159547,
+   "line4": false
+  },
+  {
+   "name": "삼가",
+   "idx": null,
+   "lat": 37.242143,
+   "lon": 127.168283,
+   "line4": false
+  },
+  {
+   "name": "시청.용인대",
+   "idx": null,
+   "lat": 37.239327,
+   "lon": 127.17886,
+   "line4": false
+  },
+  {
+   "name": "명지대",
+   "idx": null,
+   "lat": 37.237966,
+   "lon": 127.190348,
+   "line4": false
+  },
+  {
+   "name": "김량장",
+   "idx": null,
+   "lat": 37.237247,
+   "lon": 127.198641,
+   "line4": false
+  },
+  {
+   "name": "석천사거리",
+   "idx": null,
+   "lat": 37.456734,
+   "lon": 126.710779,
+   "line4": false
+  },
+  {
+   "name": "모래내시장",
+   "idx": null,
+   "lat": 37.455858,
+   "lon": 126.71948,
+   "line4": false
+  },
+  {
+   "name": "만수",
+   "idx": null,
+   "lat": 37.454968,
+   "lon": 126.731859,
+   "line4": false
+  },
+  {
+   "name": "남동구청",
+   "idx": null,
+   "lat": 37.448165,
+   "lon": 126.736812,
+   "line4": false
+  },
+  {
+   "name": "인천대공원",
+   "idx": null,
+   "lat": 37.448549,
+   "lon": 126.752815,
+   "line4": false
+  },
+  {
+   "name": "서화성",
+   "idx": null,
+   "lat": 37.248782,
+   "lon": 126.786866,
+   "line4": false
+  },
+  {
+   "name": "수원버스터미널",
+   "idx": null,
+   "lat": 37.251039,
+   "lon": 127.019874,
+   "line4": false
+  },
+  {
+   "name": "김포시외버스터미널",
+   "idx": null,
+   "lat": 37.62661,
+   "lon": 126.71197,
+   "line4": false
+  },
+  {
+   "name": "성남",
+   "idx": null,
+   "lat": 37.393689,
+   "lon": 127.120584,
+   "line4": false
+  },
+  {
+   "name": "걸포북변",
+   "idx": null,
+   "lat": 37.631715,
+   "lon": 126.705647,
+   "line4": false
+  },
+  {
+   "name": "사우",
+   "idx": null,
+   "lat": 37.6202,
+   "lon": 126.719765,
+   "line4": false
+  },
+  {
+   "name": "풍무",
+   "idx": null,
+   "lat": 37.612374,
+   "lon": 126.732463,
+   "line4": false
+  },
+  {
+   "name": "고촌",
+   "idx": null,
+   "lat": 37.601263,
+   "lon": 126.770212,
+   "line4": false
+  },
+  {
+   "name": "서울남부터미널",
+   "idx": null,
+   "lat": 37.484322,
+   "lon": 127.015564,
+   "line4": false
+  },
+  {
+   "name": "장자호수공원",
+   "idx": null,
+   "lat": 37.587406,
+   "lon": 127.137912,
+   "line4": false
+  },
+  {
+   "name": "동구릉",
+   "idx": null,
+   "lat": 37.610514,
+   "lon": 127.138109,
+   "line4": false
+  },
+  {
+   "name": "다산",
+   "idx": null,
+   "lat": 37.624329,
+   "lon": 127.149763,
+   "line4": false
+  },
+  {
+   "name": "운정중앙",
+   "idx": null,
+   "lat": 37.716146,
+   "lon": 126.728286,
+   "line4": false
+  },
+  {
+   "name": "상봉터미널 임시승차장",
+   "idx": null,
+   "lat": 37.596384,
+   "lon": 127.092847,
+   "line4": false
+  },
+  {
+   "name": "킨텍스",
+   "idx": null,
+   "lat": 37.665214,
+   "lon": 126.748326,
+   "line4": false
+  },
+  {
+   "name": "아라",
+   "idx": null,
+   "lat": 37.592259,
+   "lon": 126.713301,
+   "line4": false
+  },
+  {
+   "name": "뚝섬",
+   "idx": null,
+   "lat": 37.547235,
+   "lon": 127.04741,
+   "line4": false
+  },
+  {
+   "name": "영통입구(시외버스)",
+   "idx": null,
+   "lat": 37.268821,
+   "lon": 127.08328,
+   "line4": false
+  },
+  {
+   "name": "한강버스 여의도선착장",
+   "idx": null,
+   "lat": 37.528439,
+   "lon": 126.93513,
+   "line4": false
+  },
+  {
+   "name": "병점시외버스정류소",
+   "idx": null,
+   "lat": 37.203434,
+   "lon": 127.038073,
+   "line4": false
+  },
+  {
+   "name": "신갈영덕버스정류장(서울방향)",
+   "idx": null,
+   "lat": 37.273715,
+   "lon": 127.104116,
+   "line4": false
+  },
+  {
+   "name": "신갈용인정류소",
+   "idx": null,
+   "lat": 37.271214,
+   "lon": 127.104064,
+   "line4": false
+  },
+  {
+   "name": "신갈영덕버스정류장",
+   "idx": null,
+   "lat": 37.269965,
+   "lon": 127.097028,
+   "line4": false
+  },
+  {
+   "name": "군포시외버스정류소",
+   "idx": null,
+   "lat": 37.331711,
+   "lon": 126.927312,
+   "line4": false
+  },
+  {
+   "name": "상록수시외버스정류소",
+   "idx": null,
+   "lat": 37.301733,
+   "lon": 126.865032,
+   "line4": false
+  },
+  {
+   "name": "잠실시외버스정류소",
+   "idx": null,
+   "lat": 37.51269,
+   "lon": 127.097102,
+   "line4": false
+  },
+  {
+   "name": "의왕톨게이트시외버스정류장",
+   "idx": null,
+   "lat": 37.346971,
+   "lon": 126.984803,
+   "line4": false
+  },
+  {
+   "name": "관악(공항버스)",
+   "idx": null,
+   "lat": 37.418361,
+   "lon": 126.911692,
+   "line4": false
+  }
+ ]
+}

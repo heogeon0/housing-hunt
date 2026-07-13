@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.geocache.json
+_overpass.json
+.playwright-mcp/
+*.pdf
+*.xlsx
