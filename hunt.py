@@ -21,7 +21,7 @@ import traceback
 from datetime import date, timedelta
 
 from geo import Commute
-from sources import lh, sh, youth
+from sources import lh, sh, youth, gh
 
 TODAY = date.today()
 
@@ -151,7 +151,7 @@ def judge(crit: dict) -> list[str]:
 
 def collect(commute: Commute) -> list[dict]:
     briefs = []
-    for source, name in ((lh, "LH"), (sh, "SH"), (youth, "청년안심")):
+    for source, name in ((lh, "LH"), (sh, "SH"), (youth, "청년안심"), (gh, "GH")):
         try:
             anns = source.relevant(source.announcements())
         except Exception as e:
