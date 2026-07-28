@@ -78,6 +78,10 @@ def criteria(notice: str) -> dict:
         out["assets_self_limit"] = min(man)      # 3순위(행복주택 청년) 기준이 더 빡빡하다
         out["assets_parents_limit"] = max(man)   # 2순위(국민임대) 기준
 
+    # 통합공공임대는 소득 구간에 따라 임대료가 차등이라 단일 상한이 없다.
+    if not out.get("income_limit") and re.search(r"월평균소득의?\s*비율에\s*따라", flat):
+        out["tiered"] = True
+
     m = re.search(r"3순위[^.]{0,120}?100%\s*이하", flat)
     if m:
         out["raw"] = m.group(0)[:120]
@@ -134,6 +138,9 @@ def judge(crit: dict) -> list[str]:
     if crit.get("no_limit"):
         return ["・ 자격: 소득·자산 기준 없음 → 통과 (자동차 소유·운행 금지)"]
 
+    if crit.get("tiered"):
+        return ["・ 자격: 소득 구간별 임대료 차등 유형 → 공고문에서 본인 구간 확인"]
+
     if not il:
         return ["・ 자격: 공고문에서 소득 기준을 못 읽었다 → 원문 확인 필요"]
 
@@ -159,16 +166,37 @@ def judge(crit: dict) -> list[str]:
 
 # --- 수집 -------------------------------------------------------------------
 
+def _clean_title(t: str) -> str:
+    """제목 정규화. '[정정공고][정정공고]', '[민간임대]' 같은 접두어 정리."""
+    t = re.sub(r"\[정정공고\]\s*", "", t)
+    t = re.sub(r"\[(민간임대|추가모집)\]\s*", "", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def _dedup(anns: list[dict]) -> list[dict]:
+    """정정공고 중복 제거. 제목이 사실상 같으면(정정 표시·날짜만 다름) 하나만 남긴다.
+    LH 는 원본+정정1+정정2 가 한꺼번에 뜬다."""
+    seen, out = {}, []
+    for a in anns:
+        key = re.sub(r"\[정정공고\]|\[.*?\]|\(\d{6,}\)|\s+|_\S+", "", a["title"])[:40]
+        if key in seen:
+            continue
+        seen[key] = True
+        out.append(a)
+    return out
+
+
 def collect(commute: Commute) -> list[dict]:
     briefs = []
     for source, name in ((lh, "LH"), (sh, "SH"), (youth, "청년안심"), (gh, "GH")):
         try:
-            anns = source.relevant(source.announcements())
+            anns = _dedup(source.relevant(source.announcements()))
         except Exception as e:
             briefs.append({"agency": name, "error": f"{name} 목록 실패: {e}"})
             continue
 
         for ann in anns:
+            ann["title"] = _clean_title(ann["title"])
             try:
                 # 접수기간을 채운다. 소스마다 방법이 다르다.
                 #   LH·SH: 공고문 PDF 의 일정표에서 읽는다(목록엔 마감일이 없거나 게시일뿐).

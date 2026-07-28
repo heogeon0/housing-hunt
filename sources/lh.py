@@ -20,16 +20,17 @@ INFO = f"{BASE}/lhapply/apply/wt/wrtanc/selectWrtancInfo.do"  # View.do 가 아�
 FILE = f"{BASE}/lhapply/lhFile.do?fileid="
 REF = f"{LIST}?mi=1026"
 
-# 청년 1인가구가 신청할 수 있는 유형만
-WANT = re.compile(r"청년|매입임대|전세임대|행복주택")
+# 청년 1인가구가 신청할 수 있는 유형만. 뉴홈(공공분양)은 청년 특별공급이 있다.
+WANT = re.compile(r"청년|매입임대|전세임대|행복주택|공공분양|나눔형|선택형|이익공유")
 SKIP = re.compile(r"다자녀|고령자|신혼|신생아|장애|귀농|수급자|영구임대|국민임대|"
-                  r"50년|분양전환|기숙사형")
+                  r"50년|분양전환|기숙사형|일반매각|잔여세대|미분양")
 # LH 는 전국 공고를 한 목록에 쏟는다. 출퇴근이 불가능한 지역은 아예 뺀다.
 # 안 그러면 브리핑이 경남 사천·울산·세종 공고로 도배된다.
 OUT_OF_REGION = re.compile(
     r"경남|경북|전남|전북|충남|충북|강원|제주|울산|부산|대구|광주|대전|세종|"
     r"사천|의령|거창|김제|정읍|남원|익산|군산|당진|예산|물금|철원|영월|제천|"
-    r"옹진|백령|양산|창원|진주|포항|구미|천안|청주|춘천|강릉|원주|여주|연천|가평|양평")
+    r"옹진|백령|양산|창원|진주|포항|구미|천안|청주|춘천|강릉|원주|여주|연천|가평|양평|"
+    r"영천|경주|안동|김천|상주|문경|영주|보령|아산|공주|서산|논산|목포|여수|순천|군산|익산")
 
 
 def _rows(page: str) -> list[dict]:
@@ -59,23 +60,33 @@ def _rows(page: str) -> list[dict]:
     return out
 
 
-def announcements(pages: int = 3) -> list[dict]:
-    """게시일 역순이라 1페이지만 보면 놓친다. 여러 페이지를 훑는다."""
-    first = text(f"{LIST}?mi=1026")
-    tk = re.search(r'name="csrfToken"[^>]*value="([^"]+)"', first)
-    token = tk.group(1) if tk else ""
+# 임대(1026)와 분양(1027) 두 카테고리. 뉴홈 공공분양은 분양 쪽에 들어온다.
+# srchUppAisTpCd 코드는 하드코딩하지 않고 카테고리 페이지의 hidden 필드에서 읽는다
+# (값이 바뀌어도 견디게).
+CATEGORIES = ["1026", "1027"]
 
+
+def announcements(pages: int = 3) -> list[dict]:
+    """게시일 역순이라 1페이지만 보면 놓친다. 임대·분양 두 목록을 여러 페이지 훑는다."""
     seen, found = set(), []
-    for page in range(1, pages + 1):
-        body = {"csrfToken": token, "mi": "1026", "currPage": str(page),
-                "listCo": "100", "srchUppAisTpCd": "061339", "uppAisTpCd": "06",
-                "schTy": "0", "srchY": "Y"}
-        got = _rows(text(LIST, data=body, referer=REF))
-        fresh = [r for r in got if r["panId"] not in seen]
-        seen.update(r["panId"] for r in fresh)
-        found += fresh
-        if len(got) < 100:
-            break
+    for mi in CATEGORIES:
+        first = text(f"{LIST}?mi={mi}")
+        tk = re.search(r'name="csrfToken"[^>]*value="([^"]+)"', first)
+        token = tk.group(1) if tk else ""
+        upp = re.search(r'name="srchUppAisTpCd"[^>]*value="([^"]+)"', first)
+        upp = upp.group(1) if upp else ""
+        upp2 = re.search(r'id="uppAisTpCd"[^>]*value="([^"]+)"', first)
+        upp2 = upp2.group(1) if upp2 else mi[:2]
+        for page in range(1, pages + 1):
+            body = {"csrfToken": token, "mi": mi, "currPage": str(page),
+                    "listCo": "100", "schTy": "0", "srchY": "Y",
+                    "srchUppAisTpCd": upp, "uppAisTpCd": upp2}
+            got = _rows(text(LIST, data=body, referer=f"{LIST}?mi={mi}"))
+            fresh = [r for r in got if r["panId"] not in seen]
+            seen.update(r["panId"] for r in fresh)
+            found += fresh
+            if len(got) < 100:
+                break
     return found
 
 
@@ -115,63 +126,80 @@ class LayoutError(Exception):
 def _columns(rows: list[list[str]]) -> dict:
     """헤더를 읽어 컬럼을 이름으로 찾는다.
 
-    컬럼 위치는 공고마다 다르다. 실제로 [울산권] 매입임대는 컬럼이 14개뿐이고
-    주소가 [2], 보증금이 [10]이다. 경기남부 청년매입은 29개에 주소가 [3]이다.
-    인덱스를 박아두면 배치가 다른 공고에서 엉뚱한 칸을 읽는다.
+    컬럼 위치는 공고마다 다르다. [울산권] 은 14개에 주소가 [2], 경기남부 청년매입은
+    29개에 주소가 [3], 인천 일반매입은 헤더가 두 행에 걸쳐 있다. 인덱스를 박으면
+    엉뚱한 칸을 읽으므로 이름으로 찾는다.
 
-    임대조건은 두 세트로 나온다. 병합 헤더 윗줄에 '청년 수급자'(1순위)와
-    '청년 일반'(2·3순위)이 있고, 아랫줄에 각각 임대보증금/월임대료가 붙는다.
-    일반 청년 신청자에게 필요한 건 '일반' 쪽이다. 수급자 조건을 쓰면 월세를
-    20%쯤 과소평가한다.
+    헤더가 여러 행에 걸치는 경우(인천: '순번|주소|...|임대조건' 다음 행에
+    '전용|공용|임대보증금|월임대료')를 위해, 헤더로 보이는 연속 행들의 라벨을
+    컬럼별로 이어붙여 하나로 만든다.
+
+    임대조건이 두 세트인 공고(경기남부 청년매입: '청년 수급자'(1순위) / '청년
+    일반'(2·3순위))는 '일반' 쪽을 쓴다. 수급자 조건을 쓰면 월세를 20%쯤 과소평가한다.
     """
-    field_row = group_row = None
-    for i, r in enumerate(rows):
-        labels = [str(c).strip() for c in r]
-        if "주소" in labels and any("임대보증금" in x for x in labels):
-            field_row, group_row = r, rows[i - 1] if i else []
-            break
-    if not field_row:
+    # 헤더 행 범위: '주소' 또는 '임대보증금' 라벨이 등장하는 연속 구간.
+    hdr_idx = [i for i, r in enumerate(rows[:12])
+               if any(k in str(c) for c in r for k in ("주소", "임대보증금", "월임대료", "전용"))]
+    if not hdr_idx:
         raise LayoutError("헤더(주소/임대보증금) 행을 못 찾았다")
+    lo, hi = min(hdr_idx), max(hdr_idx) + 1
+    # 두 세트 공고는 그룹 라벨('청년 일반' 등)이 헤더 바로 위 행에 따로 있다.
+    # 이 행을 포함해야 '일반'(2·3순위) 컬럼을 찾을 수 있다.
+    while lo > 0 and any(k in str(c) for c in rows[lo - 1] for k in ("일반", "수급자")):
+        lo -= 1
 
-    def find(*names, start=0):
-        for j, c in enumerate(field_row):
-            if j < start:
-                continue
-            flat = re.sub(r"\s+", "", str(c))
-            if any(re.sub(r"\s+", "", n) == flat for n in names):
-                return j
-        return None
+    # 컬럼별로 헤더 행들의 라벨을 이어붙인다. 위 행이 비면 아래 행 라벨이 채운다.
+    width = max(len(rows[i]) for i in range(lo, hi))
+    merged = []
+    for j in range(width):
+        parts = [re.sub(r"\s+", "", str(rows[i][j])) for i in range(lo, hi)
+                 if j < len(rows[i]) and str(rows[i][j]).strip()]
+        merged.append("".join(parts))
 
-    # '청년 일반'(2·3순위) 그룹이 시작하는 컬럼
+    # '청년 일반' 그룹(2·3순위)이 시작하는 컬럼. 없으면 0(단일 세트 공고).
     general = 0
-    for j, c in enumerate(group_row):
-        if "일반" in str(c):
+    for j, c in enumerate(merged):
+        if "일반" in c:
             general = j
             break
+
+    def find(*names, start=0):
+        for j in range(start, len(merged)):
+            if any(n in merged[j] for n in names):
+                return j
+        return None
 
     cols = {
         "addr": find("주소"),
         "group": find("주택군"),
-        "ho": find("호"),
-        "area": find("전용면적"),
+        "ho": find("호") if find("호") is not None else find("호수"),
+        "area": find("전용"),          # '전용면적' / '전용' 둘 다
         "floor": find("층수"),
-        "elevator": find("승강기유무"),
+        "elevator": find("승강기"),
         "htype": find("주택유형"),
         "deposit": find("임대보증금", start=general),
         "rent": find("월임대료", start=general),
     }
     if cols["addr"] is None or cols["deposit"] is None or cols["rent"] is None:
-        raise LayoutError(f"필수 컬럼을 못 찾았다: {cols}")
+        raise LayoutError(f"필수 컬럼을 못 찾았다: {cols} / 헤더={merged[:14]}")
     return cols
 
 
 def units(ann: dict) -> list[dict]:
-    """첨부 엑셀 -> 매물."""
+    """첨부 엑셀 -> 매물. 분양(뉴홈)은 매물목록이 아니라 분양가 표라 대상이 아니다."""
     fid, _ = _pick(attachments(ann), (".xlsx", ".xls"), r"목록|내역|현황")
     if not fid:
         return []
     rows = read_xlsx(curl(FILE + fid, referer=INFO))
-    cols = _columns(rows)
+    try:
+        cols = _columns(rows)
+    except LayoutError:
+        # 임대보증금 컬럼이 없으면 임대 매물목록이 아니다(분양가 표 등).
+        # 조용히 비워 '직접 확인'으로 넘긴다.
+        flat = " ".join(str(c) for r in rows[:14] for c in r)
+        if "임대보증금" not in flat and ("주택가격" in flat or "분양" in flat):
+            return []
+        raise
 
     def cell(r, key):
         j = cols[key]
