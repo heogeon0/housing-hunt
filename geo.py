@@ -201,6 +201,24 @@ class Commute:
                 best[station] = d
         return best
 
+    def by_station(self, name: str, walk_min: int = 5) -> dict | None:
+        """역명이 이미 있으면(청년안심주택은 제목·본문에 역이 박혀 있다) 지오코딩을
+        건너뛰고 그 역에서 바로 잰다. 도보는 역세권이라 짧게 가정한다."""
+        s = self.stations.get(name)
+        rail = self.rail.get(name) if s else None
+        if rail is None:
+            return None
+        return {
+            "station": name,
+            "lines": s["lines"],
+            "walk_min": walk_min,
+            "walk_m": walk_min * WALK_M_PER_MIN,
+            "rail_min": round(rail),
+            "total_min": round(walk_min + rail + BOARDING),
+            "needs_bus": False,
+            "lat": s["lat"], "lon": s["lon"],
+        }
+
     def estimate(self, addr: str) -> dict | None:
         """좌표를 못 찾으면 None. 가장 가까운 역이 반대 방향일 수 있으므로
         후보 여러 개를 놓고 '도보 + 철도'의 합이 가장 작은 것을 고른다."""

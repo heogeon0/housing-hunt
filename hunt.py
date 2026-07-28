@@ -21,7 +21,7 @@ import traceback
 from datetime import date, timedelta
 
 from geo import Commute
-from sources import lh, sh
+from sources import lh, sh, youth
 
 TODAY = date.today()
 
@@ -151,7 +151,7 @@ def judge(crit: dict) -> list[str]:
 
 def collect(commute: Commute) -> list[dict]:
     briefs = []
-    for source, name in ((lh, "LH"), (sh, "SH")):
+    for source, name in ((lh, "LH"), (sh, "SH"), (youth, "청년안심")):
         try:
             anns = source.relevant(source.announcements())
         except Exception as e:
@@ -160,11 +160,16 @@ def collect(commute: Commute) -> list[dict]:
 
         for ann in anns:
             try:
-                # 공고문을 먼저 읽어 접수기간을 채운다. SH 는 목록에 마감일이 없어서
-                # 공고문을 봐야 안다. 이걸 채우기 전에 마감 판정을 하면 SH 마감 공고가
-                # 항상 필터를 통과해버린다(빈 deadline 은 마감으로 안 쳐진다).
-                notice = source.notice_text(ann)
-                start, end = apply_period(notice)
+                # 접수기간을 채운다. 소스마다 방법이 다르다.
+                #   LH·SH: 공고문 PDF 의 일정표에서 읽는다(목록엔 마감일이 없거나 게시일뿐).
+                #   청년안심: 소스가 목록/상세에서 직접 준다(_period).
+                # 채우기 전에 마감 판정하면 빈 deadline 이 필터를 통과해버린다.
+                if hasattr(source, "_period"):
+                    start, end = source._period(ann)
+                    notice = None
+                else:
+                    notice = source.notice_text(ann)
+                    start, end = apply_period(notice)
                 if start:
                     ann["opens"] = start
                 if not ann.get("deadline") and end:
@@ -173,6 +178,10 @@ def collect(commute: Commute) -> list[dict]:
                 if _expired(ann):
                     continue        # 이미 마감됐다
 
+                # 청년안심 민간임대는 소득·자산 기준이 없다(항상 통과, 차량 금지).
+                crit = {} if name == "청년안심" else criteria(
+                    notice if notice is not None else source.notice_text(ann))
+
                 us = source.units(ann)
                 if not us:
                     # 매물 목록 첨부가 없는 공고가 많다. SH 특화형 매입임대(서초·강동·
@@ -180,8 +189,7 @@ def collect(commute: Commute) -> list[dict]:
                     # 사실 자체를 모른다. 목록에는 띄우고 원문을 보게 한다.
                     briefs.append({"agency": name, "ann": ann, "groups": [],
                                    "total_groups": 0, "dropped": 0,
-                                   "no_units": True,
-                                   "criteria": criteria(notice)})
+                                   "no_units": True, "criteria": crit})
                     continue
                 groups = source.groups(us)
                 for g in groups:
@@ -198,7 +206,7 @@ def collect(commute: Commute) -> list[dict]:
                     "groups": near[:5],
                     "total_groups": len(groups),
                     "dropped": len(source.groups(us)) - len(groups),
-                    "criteria": criteria(notice),
+                    "criteria": crit,
                 })
             except Exception as e:
                 traceback.print_exc(file=sys.stderr)
@@ -210,6 +218,13 @@ def collect(commute: Commute) -> list[dict]:
 def _commute_of(group: dict, commute: Commute) -> dict | None:
     """LH 주택군은 여러 건물을 묶으므로 배정 확률로 가중평균한다.
     SH 는 건물이 하나라 그냥 그 건물 값이다."""
+    # 청년안심주택은 역명이 이미 있다. 지오코딩보다 정확하니 그걸 쓴다.
+    if group.get("station"):
+        est = commute.by_station(group["station"])
+        if est:
+            return {"total_min": est["total_min"], "best": est, "worst": est,
+                    "certain": True}
+
     parts = []
     for b in group["buildings"]:
         est = commute.estimate(b["addr"])
