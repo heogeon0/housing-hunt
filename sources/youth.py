@@ -104,6 +104,7 @@ def units(ann: dict) -> list[dict]:
 
     if not addr_clean:
         return []
+    dep, rent = _rent_floor(ann)
     return [{
         "agency": "청년안심",
         "group": ann["title"],
@@ -112,10 +113,46 @@ def units(ann: dict) -> list[dict]:
         "gu": gu.group(1) if gu else "",
         "count": int(houses.group(1)) if houses else 1,
         "supply": supply.group(1).strip() if supply else "",
-        # 민간임대는 보증금·월세가 주택형마다 달라 PDF 에 있다. 요약엔 없음.
-        "deposit": None,
-        "rent": None,
+        # 대표값: 가장 작은 평형·보증금 40% 기준. 평형·비율마다 달라 '~' 로 표기한다.
+        "deposit": dep,
+        "rent": rent,
     }]
+
+
+def _rent_floor(ann: dict) -> tuple[int | None, int | None]:
+    """공고문 PDF 임대료 표에서 대표값(최저 보증금·그때의 월세)을 뽑는다.
+
+    표 구조: '세대수 보증금40% 월세40% 보증금50% 월세50% 보증금60% 월세60%' (단위 만원).
+    평형·특공/일반·비율마다 값이 여러 개라 정확히 매핑하기 어렵다. 신청 전 공고문을
+    봐야 하므로, 여기선 '가장 싼 보증금(40% 기준)'만 대표로 뽑아 하한을 보여준다.
+    """
+    from .common import curl, _pdftotext
+    if not ann.get("atchFileId"):
+        return None, None
+    try:
+        b = _pdftotext(curl(FILE + ann["atchFileId"] + "&fileSn=1", referer=VIEW)) or ""
+    except Exception:
+        return None, None
+    # 임대료 표의 데이터 행: '세대수 보증금 월세 보증금 월세 보증금 월세' (단위 만원).
+    # 그런데 40/50/60% 컬럼 순서가 공고마다 뒤섞인다. 한 줄 안의 (보증금,월세) 쌍을
+    # 전부 보고 그 줄의 최저 보증금·대응 월세를 쓴다. 그리고 모든 행 중 최저를 대표로.
+    best = None
+    for ln in b.split("\n"):
+        # 앞의 세대수(1~3자리) + 뒤에 이어지는 보증금(4~6자리)·월세(2~3자리) 3쌍 이상
+        if not re.match(r"\s*\(?\d{1,3}\)?\s+[\d,]{3,6}\s+\d{2,3}\s+[\d,]{3,6}\s+\d{2,3}", ln):
+            continue
+        nums = re.findall(r"[\d,]+", ln)
+        vals = [int(n.replace(",", "")) for n in nums]
+        # 첫 값은 세대수. 이후 (보증금 만단위, 월세 만단위) 쌍.
+        pairs = [(vals[i], vals[i + 1]) for i in range(1, len(vals) - 1, 2)
+                 if 1_000 <= vals[i] <= 99_999 and 5 <= vals[i + 1] <= 500]
+        if not pairs:
+            continue
+        dep, rent = min(pairs)          # 최저 보증금
+        cand = (dep * 10_000, rent * 10_000)
+        if best is None or cand[0] < best[0]:
+            best = cand
+    return best if best else (None, None)
 
 
 def _station_name(raw: str) -> str:
@@ -135,7 +172,7 @@ def groups(us: list[dict]) -> list[dict]:
             "gu": u.get("gu", ""),
             "count": u["count"],
             "deposit": u["deposit"],
-            "rent_min": None, "rent_max": None,
+            "rent_min": u.get("rent"), "rent_max": u.get("rent"),
             "supply": u.get("supply", ""),
             "buildings": [{"addr": u["addr"], "count": u["count"], "share": 1.0}],
         })

@@ -62,6 +62,12 @@ def criteria(notice: str) -> dict:
     if not won:
         won = [int(x.replace(",", ""))
                for x in re.findall(r"100%\s*이하\s*" + MONEY, flat)]
+    if not won:
+        # 청년안심: '1순위 100% 3,813,363 ... / 3순위 120% 4,576,036 ...'
+        # 각 % 뒤 첫 칸이 1인가구. 3순위(120%)가 상한이다. 뒤 칸(2·3인)은 더 크니
+        # max() 로 뭉뚱그리면 안 되고, % 별 첫 칸만 잡아 그중 최대를 쓴다.
+        won = [int(x.replace(",", ""))
+               for x in re.findall(r"1[012]0%\s*" + MONEY, flat)]
     if won:
         out["income_limit"] = max(won)
 
@@ -124,6 +130,10 @@ def judge(crit: dict) -> list[str]:
     al3 = crit.get("assets_self_limit")
     al2 = crit.get("assets_parents_limit")
 
+    # 기준이 아예 없는 유형(청년안심 민간임대 일반공급)과 못 읽은 경우를 구분한다.
+    if crit.get("no_limit"):
+        return ["・ 자격: 소득·자산 기준 없음 → 통과 (자동차 소유·운행 금지)"]
+
     if not il:
         return ["・ 자격: 공고문에서 소득 기준을 못 읽었다 → 원문 확인 필요"]
 
@@ -178,9 +188,9 @@ def collect(commute: Commute) -> list[dict]:
                 if _expired(ann):
                     continue        # 이미 마감됐다
 
-                # 청년안심 민간임대는 소득·자산 기준이 없다(항상 통과, 차량 금지).
-                crit = {} if name == "청년안심" else criteria(
-                    notice if notice is not None else source.notice_text(ann))
+                # 자격 기준은 공고문에서 읽는다. 청년안심도 공고문 PDF 에 순위별
+                # 소득표(1순위 100% / 2순위 110% / 3순위 120%)가 있다.
+                crit = criteria(notice if notice is not None else source.notice_text(ann))
 
                 us = source.units(ann)
                 if not us:
@@ -294,14 +304,26 @@ def render(briefs: list[dict]) -> str:
         lines.append("")
 
     if unlisted:
-        # 매물 목록 첨부가 없는 공고. 조용히 버리면 이런 게 있었다는 것조차 모른다.
-        lines.append("📎 매물 목록이 없어 직접 확인해야 하는 공고")
+        # 매물을 못 뽑은 공고. 조용히 버리면 이런 게 있었다는 것조차 모른다.
+        # 같은 유형(특화형 매입임대 등)이 여러 건이라 유형별로 묶어 한 줄씩만 낸다.
+        seen = set()
+        rows = []
         for b in unlisted:
-            ann = b["ann"]
-            left = _days_left(ann.get("deadline", ""))
-            d = f" (D-{left})" if left is not None else ""
-            lines.append(f"・ [{b['agency']}] {ann['title'][:52]}{d}")
-        lines.append("")
+            title = b["ann"]["title"]
+            key = re.sub(r"\(운영기관.*?\)|_\S+|\d{6,}|\[.*?\]", "", title).strip()
+            key = (b["agency"], re.sub(r"\s+", " ", key)[:26])
+            if key in seen:
+                continue
+            seen.add(key)
+            left = _days_left(b["ann"].get("deadline", ""))
+            rows.append((left if left is not None else 999,
+                         f"・ [{b['agency']}] {key[1]}"
+                         + (f" (D-{left})" if left is not None else "")))
+        if rows:
+            lines.append("📋 매물 미확인 — 공고문 직접 확인")
+            for _, r in sorted(rows)[:6]:
+                lines.append(r)
+            lines.append("")
 
     # 다가오는 일정. 예측이 아니라 공고문에 적힌 실제 날짜만 쓴다.
     # 접수가 아직 시작 안 됐거나(D-day 전), 마감이 코앞인 것.
