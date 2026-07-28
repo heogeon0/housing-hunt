@@ -6,3 +6,7 @@ _subway.json
 .playwright-mcp/
 *.pdf
 *.xlsx
+
+err.txt
+brief.txt
+payload.json

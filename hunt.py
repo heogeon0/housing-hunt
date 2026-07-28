@@ -82,28 +82,38 @@ DATE_TIME = (r"['‘’]?(\d{2,4})?\.?\s*(\d{1,2})\.\s*(\d{1,2})\.\s*"
              r"\([월화수목금토일]\)\s*(\d{1,2}:\d{2})")
 
 
-def deadline_from_notice(notice: str) -> str:
-    """SH 목록에는 접수기간이 없다. 게시일만 준다. 공고문에서 마감일을 읽는다.
+def apply_period(notice: str) -> tuple[str, str]:
+    """공고문에서 접수 시작일과 마감일을 읽는다. -> ('2026.07.13', '2026.07.15')
+
+    SH 목록은 게시일만 주고 접수기간을 안 준다. LH 목록은 마감일은 주지만 시작일이
+    없다. 둘 다 공고문 일정표에는 있다.
 
     표기가 추출기마다 다르다. 시각(10:00 ~ 17:00)이 붙은 날짜 범위는 접수 일정뿐이라
     그걸 앵커로 잡는다.
       pypdf:     신청접수(온라인)'26. 7. 13.(월)10:00 ~'26. 7. 15.(수)17:00
       pdftotext: 인터넷청약 신청접수: 2026. 7. 13.(월) 10:00 ~ 7. 15.(수) 17:00
                  (끝 날짜에 연도가 없다)
-    이걸 못 읽으면 마감 경고가 안 뜨고, 마감을 놓친다.
     """
     flat = " ".join(notice.split())
     m = re.search(DATE_TIME + r"\s*~\s*" + DATE_TIME, flat)
     if not m:
-        return ""
-    y1, _, _, _, y2, mm, dd, _ = m.groups()
-    year = y2 or y1
-    if not year:
-        return ""
-    year = int(year)
-    if year < 100:                      # '26 -> 2026
-        year += 2000
-    return f"{year}.{int(mm):02d}.{int(dd):02d}"
+        return "", ""
+    y1, m1, d1, _, y2, m2, d2, _ = m.groups()
+
+    def build(year, mm, dd, fallback):
+        year = year or fallback
+        if not year:
+            return ""
+        year = int(year)
+        if year < 100:                  # '26 -> 2026
+            year += 2000
+        return f"{year}.{int(mm):02d}.{int(dd):02d}"
+
+    return build(y1, m1, d1, y2), build(y2, m2, d2, y1)
+
+
+def deadline_from_notice(notice: str) -> str:
+    return apply_period(notice)[1]
 
 
 def judge(crit: dict) -> list[str]:
@@ -149,10 +159,20 @@ def collect(commute: Commute) -> list[dict]:
             continue
 
         for ann in anns:
-            left = _days_left(ann.get("deadline", ""))
-            if left is not None and left < 0:
-                continue        # 이미 마감됐다
             try:
+                # 공고문을 먼저 읽어 접수기간을 채운다. SH 는 목록에 마감일이 없어서
+                # 공고문을 봐야 안다. 이걸 채우기 전에 마감 판정을 하면 SH 마감 공고가
+                # 항상 필터를 통과해버린다(빈 deadline 은 마감으로 안 쳐진다).
+                notice = source.notice_text(ann)
+                start, end = apply_period(notice)
+                if start:
+                    ann["opens"] = start
+                if not ann.get("deadline") and end:
+                    ann["deadline"] = end
+
+                if _expired(ann):
+                    continue        # 이미 마감됐다
+
                 us = source.units(ann)
                 if not us:
                     # 매물 목록 첨부가 없는 공고가 많다. SH 특화형 매입임대(서초·강동·
@@ -161,7 +181,7 @@ def collect(commute: Commute) -> list[dict]:
                     briefs.append({"agency": name, "ann": ann, "groups": [],
                                    "total_groups": 0, "dropped": 0,
                                    "no_units": True,
-                                   "criteria": criteria(source.notice_text(ann))})
+                                   "criteria": criteria(notice)})
                     continue
                 groups = source.groups(us)
                 for g in groups:
@@ -172,9 +192,6 @@ def collect(commute: Commute) -> list[dict]:
                         if g["commute"]["total_min"] <= PROFILE["max_commute"]]
                 if not near:
                     continue
-                notice = source.notice_text(ann)
-                if not ann.get("deadline"):
-                    ann["deadline"] = deadline_from_notice(notice)
                 briefs.append({
                     "agency": name,
                     "ann": ann,
@@ -271,6 +288,27 @@ def render(briefs: list[dict]) -> str:
             lines.append(f"・ [{b['agency']}] {ann['title'][:52]}{d}")
         lines.append("")
 
+    # 다가오는 일정. 예측이 아니라 공고문에 적힌 실제 날짜만 쓴다.
+    # 접수가 아직 시작 안 됐거나(D-day 전), 마감이 코앞인 것.
+    upcoming = []
+    for b in briefs:
+        ann = b.get("ann")
+        if not ann:
+            continue
+        opens, ends = ann.get("opens", ""), ann.get("deadline", "")
+        d_open, d_end = _days_left(opens), _days_left(ends)
+        if d_open is not None and d_open > 0:
+            upcoming.append((d_open, f"・ {opens[5:]} 접수 시작 (D-{d_open}) "
+                                     f"[{b['agency']}] {ann['title'][:38]}"))
+        elif d_end is not None and 0 <= d_end <= 7:
+            upcoming.append((d_end + 100, f"・ {ends[5:]} 마감 (D-{d_end}) "
+                                          f"[{b['agency']}] {ann['title'][:38]}"))
+    if upcoming:
+        lines.append("📅 다가오는 일정")
+        for _, line in sorted(upcoming)[:6]:
+            lines.append(line)
+        lines.append("")
+
     if errors:
         lines.append("⚠️ 수집 실패")
         for e in errors:
@@ -298,6 +336,13 @@ def _days_left(deadline: str) -> int | None:
         return None
     d = date(int(m.group(1)), int(m.group(2)), int(m.group(3)))
     return (d - TODAY).days
+
+
+def _expired(ann: dict) -> bool:
+    """마감이 지났으면 True. 마감일을 아예 모르면(둘 다 못 읽음) 버리지 않는다 —
+    확인 필요로 남겨 사용자가 직접 보게 한다."""
+    left = _days_left(ann.get("deadline", ""))
+    return left is not None and left < 0
 
 
 def main():
